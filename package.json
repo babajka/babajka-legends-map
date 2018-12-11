@@ -1,0 +1,23 @@
+{
+  "name": "babajka-legends-map",
+  "version": "0.0.1",
+  "description": "Wir.by Map of Legends",
+  "main": "index.js",
+  "scripts": {
+    "update-legends": "node bin/fetchLegends.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/babajka/babajka-legends-map.git"
+  },
+  "author": "babajka team <github.com/babajka>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/babajka/babajka-legends-map/issues"
+  },
+  "homepage": "https://github.com/babajka/babajka-legends-map#readme",
+  "dependencies": {
+    "google-spreadsheet": "^2.0.6",
+    "lodash": "^4.17.11"
+  }
+}
