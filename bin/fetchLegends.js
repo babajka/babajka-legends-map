@@ -9,18 +9,13 @@ const GoogleSpreadsheet = require('google-spreadsheet');
 const doc = new GoogleSpreadsheet('1wSHPtMNAA34D2B4GGKA_N3Hfh0Pkfj176OpUArsnrME');
 
 doc.getInfo((err, info) => {
-  legendsSheet = keyBy(info.worksheets, 'title')['legends'];
-
-  legends = [];
+  const legendsSheet = keyBy(info.worksheets, 'title')['legends'];
 
   new Promise(resolve => {
     legendsSheet.getRows({}, (error, rows) => {
-      rows.forEach(row => {
-        legends.push(pick(row, ['title', 'lat', 'lng', 'text']))
-      })
-      resolve();
+      resolve(rows.map(row => pick(row, ['title', 'lat', 'lng', 'text'])));
     })
-  }).then(() => {
+  }).then(legends => {
     writeFileSync('data/legends.json', JSON.stringify(legends));
   })
 });
