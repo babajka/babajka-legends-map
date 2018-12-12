@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/babajka/babajka-legends-map/precache-manifest.166aa11e29ec8cd791115dc53e9799eb.js"
+  "/babajka-legends-map/precache-manifest.cb9df36ca5b5fcd0e2aae5f463dd5034.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/babajka/babajka-legends-map/index.html", {
+workbox.routing.registerNavigationRoute("/babajka-legends-map/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
