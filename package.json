@@ -2,12 +2,15 @@
   "name": "babajka-legends-map",
   "version": "0.0.1",
   "description": "Wir.by Map of Legends",
+  "homepage": "https://babajka.github.io/babajka-legends-map",
   "main": "src/index.js",
   "scripts": {
     "fetch-data": "node bin/fetchLegends.js",
     "postinstall": "patch-package && npm run fetch-data",
     "start": "react-scripts start",
-    "build": "react-scripts build"
+    "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "repository": {
     "type": "git",
@@ -18,8 +21,8 @@
   "bugs": {
     "url": "https://github.com/babajka/babajka-legends-map/issues"
   },
-  "homepage": "https://github.com/babajka/babajka-legends-map#readme",
   "dependencies": {
+    "gh-pages": "^2.0.1",
     "google-spreadsheet": "^2.0.6",
     "lodash": "^4.17.11",
     "mapbox-gl": "^0.52.0-beta.1",
