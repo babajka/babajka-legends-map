@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/babajka-legends-map/precache-manifest.cb9df36ca5b5fcd0e2aae5f463dd5034.js"
+  "/babajka-legends-map/precache-manifest.f12eb909f3611927dcbd986fe371726f.js"
 );
 
 workbox.clientsClaim();
