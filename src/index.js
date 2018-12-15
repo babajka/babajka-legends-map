@@ -6,13 +6,11 @@ import keyBy from 'lodash/keyBy';
 
 import Clickable from './Clickable';
 
-import { ACCESS_TOKEN, LIGHT_STYLE, MINSK } from './constants';
+import { ACCESS_TOKEN, LIGHT_STYLE, MINSK, BELARUS_BOUNDS } from './constants';
 import './styles.css';
 
 const Map = ReactMapboxGl({
   accessToken: ACCESS_TOKEN,
-  minZoom: 4,
-  maxZoom: 7.5,
 });
 
 // NOTE: When rendering many objects,
@@ -40,7 +38,7 @@ class App extends Component {
 
   render() {
     const { legends } = this.props;
-    const { activeLegendId, legendsById, center } = this.state;
+    const { activeLegendId, legendsById, center, fitBoundsOptions } = this.state;
     const activeLegend = legendsById[activeLegendId];
     return (
       <>
@@ -52,8 +50,12 @@ class App extends Component {
             bottom: 0,
             width: '100%',
           }}
+          // TODO: fix calling `fitBounds` on window resizing
+          fitBounds={BELARUS_BOUNDS}
+          fitBoundsOptions={{
+            padding: 25,
+          }}
           center={MINSK}
-          zoom={[6]}
         >
           {legends.map(({ id, coordinates, emoji }) => (
             <Marker key={id} coordinates={coordinates}>
