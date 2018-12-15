@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import ReactMapboxGl, { Marker, Popup } from 'react-mapbox-gl';
 import keyBy from 'lodash/keyBy';
+import emojione from 'emojione';
 
 import Clickable from './Clickable';
 
 import { ACCESS_TOKEN, LIGHT_STYLE, MINSK, BELARUS_BOUNDS } from './constants';
 import './styles.css';
+
+emojione.emojiSize = '64';
 
 const Map = ReactMapboxGl({
   accessToken: ACCESS_TOKEN,
