@@ -1,0 +1,77 @@
+$primary: #1a9582;
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Ubuntu', serif;
+}
+
+.legends {
+  &__marker {
+    width: 1.75rem;
+    height: 1.75rem;
+    cursor: pointer;
+  }
+
+  &__emoji {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.legend {
+  &__modal {
+    background-color: white;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 3;
+  }
+
+  &__content {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+  }
+
+  &__top {
+    flex: 0 1 auto;
+    padding: 1rem;
+  }
+
+  &__emoji {
+    height: 5rem;
+    margin-bottom: 1rem;
+    width: 5rem;
+  }
+
+  &__coords {
+    color: $primary;
+    font-size: 0.75rem;
+  }
+
+  &__title {
+    font-size: 2rem;
+  }
+
+  &__text {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+
+  &__close-button {
+    background: unset;
+    border: unset;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+  }
+
+  &__close-icon {
+    color: $primary;
+    font-size: 2rem;
+  }
+}
