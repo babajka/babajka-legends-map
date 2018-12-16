@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import ReactMapboxGl, { Marker, Popup } from 'react-mapbox-gl';
+import ReactMapboxGl, { Marker } from 'react-mapbox-gl';
 import keyBy from 'lodash/keyBy';
-import emojione from 'emojione';
 
 import Clickable from './Clickable';
+import LegendModal from './LegendModal';
 
-import { ACCESS_TOKEN, LIGHT_STYLE, MINSK, BELARUS_BOUNDS } from './constants';
-import './styles.css';
-
-emojione.emojiSize = '64';
+import { ACCESS_TOKEN, LIGHT_STYLE, MINSK, BELARUS_BOUNDS, LegendShape } from './constants';
+import './styles.scss';
 
 const Map = ReactMapboxGl({
   accessToken: ACCESS_TOKEN,
@@ -23,26 +21,21 @@ const Map = ReactMapboxGl({
 
 class App extends Component {
   static propTypes = {
-    legends: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        title: PropTypes.string.isRequired,
-        coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-        text: PropTypes.string.isRequired,
-        emoji: PropTypes.string.isRequired,
-      })
-    ).isRequired,
+    legends: PropTypes.arrayOf(LegendShape).isRequired,
   };
 
-  state = {
-    activeLegendId: null,
-    legendsById: keyBy(this.props.legends, 'id'),
-  };
+  constructor(props) {
+    super(props);
+    this.legendsById = keyBy(this.props.legends, 'id');
+    this.state = { activeLegendId: null };
+  }
+
+  setActiveLegendId = activeLegendId => this.setState({ activeLegendId });
 
   render() {
     const { legends } = this.props;
-    const { activeLegendId, legendsById } = this.state;
-    const activeLegend = legendsById[activeLegendId];
+    const { activeLegendId } = this.state;
+    const activeLegend = this.legendsById[activeLegendId];
     return (
       <>
         <Map
@@ -62,22 +55,20 @@ class App extends Component {
         >
           {legends
             .filter(({ emoji }) => emoji)
-            .map(({ id, coordinates, emoji, emojiShort, emojiCode }) => (
+            .map(({ id, coordinates, emoji, emojiCode }) => (
               <Marker key={id} coordinates={coordinates}>
-                <Clickable className="marker" onClick={() => this.setState({ activeLegendId: id })}>
-                  <img alt={emoji} src={`./images/${emojiCode}.png`} />
+                <Clickable
+                  className="legends__marker"
+                  onClick={() => this.setState({ activeLegendId: id })}
+                >
+                  <img className="legends__emoji" alt={emoji} src={`./images/${emojiCode}.png`} />
                 </Clickable>
               </Marker>
             ))}
-          {activeLegend && (
-            <Popup key={activeLegend.id} coordinates={activeLegend.coordinates} offset={50}>
-              <div className="popup">
-                <div>{activeLegend.title}</div>
-              </div>
-            </Popup>
-          )}
         </Map>
-        <div className="legend-text">{activeLegend && activeLegend.text}</div>
+        {activeLegend && (
+          <LegendModal legend={activeLegend} onClose={() => this.setActiveLegendId(null)} />
+        )}
       </>
     );
   }

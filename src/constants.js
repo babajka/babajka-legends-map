@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export const ACCESS_TOKEN =
   'pk.eyJ1IjoidWxhZGJvaGRhbiIsImEiOiJjam9kMDQ1NzYxOTYyM3FvanhpOXE1cDIzIn0.JiXb8lR9e53GqZz51PZdaQ';
 
@@ -13,3 +15,11 @@ export const BELARUS_BOUNDS = [
   32.776784, // east
   56.139922, // north
 ];
+
+export const LegendShape = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+  text: PropTypes.string.isRequired,
+  emoji: PropTypes.string.isRequired,
+});
