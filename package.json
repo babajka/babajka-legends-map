@@ -5,8 +5,9 @@
   "homepage": ".",
   "main": "src/index.js",
   "scripts": {
-    "fetch-data": "node bin/fetchLegends.js",
-    "postinstall": "patch-package && npm run fetch-data",
+    "fetch-legends": "node bin/fetchLegends.js",
+    "scrap-emojis": "node bin/emojipediaScrapper.js",
+    "postinstall": "npm i bin --production && npm run fetch-legends",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "predeploy": "npm run build",
@@ -23,8 +24,8 @@
     "url": "https://github.com/babajka/babajka-legends-map/issues"
   },
   "dependencies": {
+    "babajka-legends-map-bin": "file:bin",
     "gh-pages": "^2.0.1",
-    "google-spreadsheet": "^2.0.6",
     "lodash": "^4.17.11",
     "mapbox-gl": "^0.52.0-beta.1",
     "react": "^16.6.3",

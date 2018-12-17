@@ -4,8 +4,14 @@ body {
 }
 
 .marker {
+  width: 1.75rem;
+  height: 1.75rem;
   cursor: pointer;
-  font-size: 3em;
+}
+
+.marker img {
+  width: 100%;
+  height: auto;
 }
 
 .popup {
