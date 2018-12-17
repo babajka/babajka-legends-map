@@ -1,0 +1,20 @@
+{
+  "name": "babajka-legends-map-bin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "emojipediaScrapper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "babajka team <github.com/babajka>",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "puppeteer": "^1.11.0",
+    "request-promise": "^4.2.2"
+  },
+  "dependencies": {
+    "google-spreadsheet": "^2.0.6",
+    "twemoji": "^11.2.0"
+  }
+}

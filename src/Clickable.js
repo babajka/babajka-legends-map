@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Clickable = ({ onClick, children, ...props }) => (
-  <span
+  <div
     role="button"
     tabIndex={0}
     onClick={onClick}
@@ -14,7 +14,7 @@ const Clickable = ({ onClick, children, ...props }) => (
     {...props}
   >
     {children}
-  </span>
+  </div>
 );
 
 Clickable.propTypes = {

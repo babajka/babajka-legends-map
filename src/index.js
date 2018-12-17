@@ -38,7 +38,7 @@ class App extends Component {
 
   render() {
     const { legends } = this.props;
-    const { activeLegendId, legendsById, center, fitBoundsOptions } = this.state;
+    const { activeLegendId, legendsById } = this.state;
     const activeLegend = legendsById[activeLegendId];
     return (
       <>
@@ -57,13 +57,15 @@ class App extends Component {
           }}
           center={MINSK}
         >
-          {legends.map(({ id, coordinates, emoji }) => (
-            <Marker key={id} coordinates={coordinates}>
-              <Clickable className="marker" onClick={() => this.setState({ activeLegendId: id })}>
-                {emoji}
-              </Clickable>
-            </Marker>
-          ))}
+          {legends
+            .filter(({ emoji }) => emoji)
+            .map(({ id, coordinates, emoji, emojiShort, emojiCode }) => (
+              <Marker key={id} coordinates={coordinates}>
+                <Clickable className="marker" onClick={() => this.setState({ activeLegendId: id })}>
+                  <img alt={emoji} src={`./images/${emojiCode}.png`} />
+                </Clickable>
+              </Marker>
+            ))}
           {activeLegend && (
             <Popup key={activeLegend.id} coordinates={activeLegend.coordinates} offset={50}>
               <div className="popup">
