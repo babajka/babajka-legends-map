@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ReactMapboxGl, { Marker } from 'react-mapbox-gl';
 import keyBy from 'lodash/keyBy';
 
-import Clickable from './Clickable';
+import Clickable from './common/Clickable';
 import LegendModal from './LegendModal';
 
 import { ACCESS_TOKEN, LIGHT_STYLE, MINSK, BELARUS_BOUNDS, LegendShape } from './constants';
