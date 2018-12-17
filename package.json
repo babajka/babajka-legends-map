@@ -2,7 +2,7 @@
   "name": "babajka-legends-map",
   "version": "0.0.1",
   "description": "Wir.by Map of Legends",
-  "homepage": "https://babajka.github.io/babajka-legends-map",
+  "homepage": ".",
   "main": "src/index.js",
   "scripts": {
     "fetch-data": "node bin/fetchLegends.js",
@@ -10,7 +10,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "deploy:prod": "bash bin/deploy.sh"
   },
   "repository": {
     "type": "git",
