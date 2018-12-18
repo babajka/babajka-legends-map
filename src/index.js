@@ -6,6 +6,8 @@ import ReactGA from 'react-ga';
 import keyBy from 'lodash/keyBy';
 
 import Clickable from './common/Clickable';
+import Title from './common/Title';
+import Wir from './common/Wir';
 import LegendModal from './LegendModal';
 
 import { track } from './utils';
@@ -104,18 +106,11 @@ class App extends Component {
               </Marker>
             ))}
         </Map>
+        <Title />
+        <Wir />
         {activeLegend && (
           <LegendModal legend={activeLegend} onClose={() => this.setActiveLegendId(null)} />
         )}
-        <div className="title title__map">
-          Мапа <br /> беларускіх <br /> легенд
-        </div>
-        <div className="title title__wir-reference">
-          Зроблена для <br /> пляцоўкі{' '}
-          <a href="http://wir.by" target="_blank" rel="noreferrer noopener">
-            wir.by
-          </a>
-        </div>
       </>
     );
   }
