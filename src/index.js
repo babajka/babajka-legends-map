@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import ReactMapboxGl, { Marker } from 'react-mapbox-gl';
+import ReactMapboxGl, { Marker, ZoomControl } from 'react-mapbox-gl';
 import ReactGA from 'react-ga';
 import keyBy from 'lodash/keyBy';
-import throttle from 'lodash/throttle';
 
 import Clickable from './common/Clickable';
 import LegendModal from './LegendModal';
@@ -85,6 +84,7 @@ class App extends Component {
           center={MINSK}
           onZoom={this.handleZoom}
         >
+          <ZoomControl position="bottom-right" />
           {legends
             .filter(({ emoji }) => emoji)
             .map(({ id, title, coordinates, emoji, emojiCode }) => (
