@@ -21,6 +21,8 @@ export const BELARUS_BOUNDS = [
   56.139922, // north
 ];
 
+export const EMOJI_SCALE_RATE = 4.5;
+
 export const LegendShape = PropTypes.shape({
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,

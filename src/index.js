@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ReactMapboxGl, { Marker } from 'react-mapbox-gl';
 import ReactGA from 'react-ga';
 import keyBy from 'lodash/keyBy';
+import throttle from 'lodash/throttle';
 
 import Clickable from './common/Clickable';
 import LegendModal from './LegendModal';
@@ -16,6 +17,7 @@ import {
   LIGHT_STYLE,
   MINSK,
   BELARUS_BOUNDS,
+  EMOJI_SCALE_RATE,
   LegendShape,
 } from './constants';
 import './styles.scss';
@@ -51,11 +53,19 @@ class App extends Component {
     }
   }
 
+  handleZoom = map => {
+    const { zoom } = this.state;
+    const nextZoom = Math.round(map.getZoom());
+    if (nextZoom !== zoom) {
+      this.setState({ zoom: nextZoom });
+    }
+  };
+
   setActiveLegendId = activeLegendId => this.setState({ activeLegendId });
 
   render() {
     const { legends } = this.props;
-    const { activeLegendId } = this.state;
+    const { activeLegendId, zoom } = this.state;
     const activeLegend = this.legendsById[activeLegendId];
     return (
       <>
@@ -73,19 +83,23 @@ class App extends Component {
             padding: 25,
           }}
           center={MINSK}
+          onZoom={this.handleZoom}
         >
           {legends
             .filter(({ emoji }) => emoji)
             .map(({ id, title, coordinates, emoji, emojiCode }) => (
               <Marker key={id} coordinates={coordinates}>
                 <Clickable
-                  className="legends__marker"
                   onClick={() => {
                     track({ action: 'emoji-clicked', label: `${emoji} ${title}` });
                     this.setState({ activeLegendId: id });
                   }}
                 >
-                  <img className="legends__emoji" alt={emoji} src={`./images/${emojiCode}.png`} />
+                  <img
+                    alt={emoji}
+                    src={`./images/${emojiCode}.png`}
+                    width={zoom * EMOJI_SCALE_RATE}
+                  />
                 </Clickable>
               </Marker>
             ))}
