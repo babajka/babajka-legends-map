@@ -80,3 +80,44 @@ body {
     font-size: 2rem;
   }
 }
+
+.title {
+  background: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  width: fit-content;
+  z-index: 1000;
+
+  a {
+    color: $primary;
+  }
+
+  &__map {
+    left: 1.5rem;
+    top: 1.5rem;
+  }
+
+  &__wir-reference {
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+
+  @media only screen and (max-width: 768px) {
+    &__map {
+      font-size: 2rem;
+    }
+
+    &__wir-reference {
+      font-size: 1.25rem;
+    }
+  }
+
+  @media only screen and (min-width: 768px) {
+    &__map {
+      font-size: 4rem;
+    }
+
+    &__wir-reference {
+      font-size: 1.75rem;
+    }
+  }
+}

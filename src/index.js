@@ -69,6 +69,19 @@ class App extends Component {
         {activeLegend && (
           <LegendModal legend={activeLegend} onClose={() => this.setActiveLegendId(null)} />
         )}
+        {!activeLegend && (
+          <>
+            <div className="title title__map">
+              Мапа <br /> беларускіх <br /> легенд
+            </div>
+            <div className="title title__wir-reference">
+              Зроблена для <br /> пляцоўкі{' '}
+              <a href="http://wir.by" target="_blank" rel="noreferrer noopener">
+                wir.by
+              </a>
+            </div>
+          </>
+        )}
       </>
     );
   }
