@@ -25,7 +25,7 @@ const LegendModal = ({ legend: { emoji, emojiCode, coordinates, title, text }, o
             href={getGoogleMapsUrl(coordinates)}
             rel="noopener noreferrer"
             target="_blank"
-            onClick={track.bind(null, { action: 'google-map-opened', label: `${emoji} ${title}` })}
+            onClick={() => track({ action: 'google-map-opened', label: `${emoji} ${title}` })}
           >
             {formatcoords(coordinates, true).format('DD MM X', {
               latLonSeparator: ', ',
