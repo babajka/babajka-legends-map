@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 
+import { createConstants } from './utils';
+
 export const MAPBOX_ACCESS_TOKEN =
   'pk.eyJ1IjoidWxhZGJvaGRhbiIsImEiOiJjam9kMDQ1NzYxOTYyM3FvanhpOXE1cDIzIn0.JiXb8lR9e53GqZz51PZdaQ';
 
@@ -30,3 +32,22 @@ export const LegendShape = PropTypes.shape({
   text: PropTypes.string.isRequired,
   emoji: PropTypes.string.isRequired,
 });
+
+export const zIndexElements = createConstants(
+  'MAP',
+  'MARKER',
+  'CONTROLS',
+  'LABELS',
+  'LEGENDS_MODAL'
+);
+
+export const zIndexes = [
+  zIndexElements.MAP,
+  zIndexElements.MARKER,
+  zIndexElements.CONTROLS,
+  zIndexElements.LABELS,
+  zIndexElements.LEGENDS_MODAL,
+].reduce((acc, cur, index) => {
+  acc[cur] = index;
+  return acc;
+}, {});
