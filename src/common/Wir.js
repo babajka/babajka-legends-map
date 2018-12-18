@@ -1,17 +1,19 @@
 import React from 'react';
 
+import { zIndexes, zIndexElements } from '../constants';
+
 const Wir = () => (
-  <div className="wir">
+  <div className="wir" style={{ zIndex: zIndexes[zIndexElements.LABELS] }}>
     <img className="wir__logo" src="./images/logo.png" alt="Wir.by" />
     <div>
-      Зроблена для асветніцкай пляцоўкі пра культуру
+      зроблена камандай
       <a
         className="wir__link"
         href="http://wir.by?utm_source=map"
         target="_blank"
         rel="noreferrer noopener"
       >
-        Wir.by
+        wir.by
       </a>
     </div>
   </div>

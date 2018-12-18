@@ -5,11 +5,11 @@ import Title from './common/Title';
 import Wir from './common/Wir';
 import TextWithParagraphs from './common/TextWithParagraphs';
 
-import { LegendShape } from './constants';
+import { LegendShape, zIndexes, zIndexElements } from './constants';
 import { getGoogleMapsUrl, track } from './utils';
 
 const LegendModal = ({ legend: { emoji, emojiCode, coordinates, title, text }, onClose }) => (
-  <div className="legend__modal">
+  <div className="legend__modal" style={{ zIndex: zIndexes[zIndexElements.LEGENDS_MODAL] }}>
     <div className="legend__content">
       <div className="legend__left">
         <Title />

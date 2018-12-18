@@ -10,7 +10,7 @@ import Title from './common/Title';
 import Wir from './common/Wir';
 import LegendModal from './LegendModal';
 
-import { track } from './utils';
+import { track, isMobileDevice } from './utils';
 
 import {
   MAPBOX_ACCESS_TOKEN,
@@ -20,13 +20,16 @@ import {
   BELARUS_BOUNDS,
   EMOJI_SCALE_RATE,
   LegendShape,
+  zIndexes,
+  zIndexElements,
 } from './constants';
 import './styles.scss';
 
 const Map = ReactMapboxGl({
   accessToken: MAPBOX_ACCESS_TOKEN,
+  logoPosition: 'bottom-right',
   minZoom: 4,
-  maxZoom: 9,
+  maxZoom: 6.5,
 });
 
 // NOTE: When rendering many objects,
@@ -34,9 +37,14 @@ const Map = ReactMapboxGl({
 // Use `Layers` and `Features` instead.
 // https://github.com/alex3165/react-mapbox-gl/blob/master/docs/API.md#marker
 
-const fitBoundsOptions = {
-  padding: 25,
-};
+const getFitBoundsOptions = (rightShift = false) => ({
+  padding: {
+    left: rightShift ? 250 : 25,
+    top: 25,
+    bottom: 25,
+    right: 25,
+  },
+});
 
 class App extends Component {
   static propTypes = {
@@ -72,8 +80,9 @@ class App extends Component {
   };
 
   resizeMap = () => {
+    const { activeLegendId } = this.state;
     this.map.resize();
-    this.map.fitBounds(BELARUS_BOUNDS, fitBoundsOptions);
+    this.map.fitBounds(BELARUS_BOUNDS, getFitBoundsOptions(isMobileDevice() && !activeLegendId));
   };
 
   setActiveLegendId = activeLegendId => this.setState({ activeLegendId }, this.resizeMap);
@@ -91,9 +100,10 @@ class App extends Component {
             top: activeLegendId ? 150 : 0,
             bottom: 0,
             width: activeLegendId ? '50%' : '100%',
+            zIndex: zIndexes[zIndexElements.MAP],
           }}
           fitBounds={BELARUS_BOUNDS}
-          fitBoundsOptions={fitBoundsOptions}
+          fitBoundsOptions={getFitBoundsOptions(isMobileDevice() && !activeLegendId)}
           center={MINSK}
           onZoom={this.handleZoom}
           // HACK: same `map` object
@@ -103,11 +113,15 @@ class App extends Component {
             }
           }}
         >
-          {!activeLegendId && <ZoomControl style={{ zIndex: 1 }} />}
+          <ZoomControl style={{ zIndex: zIndexes[zIndexElements.CONTROLS] }} />
           {legends
             .filter(({ id }) => !activeLegendId || id === activeLegendId)
             .map(({ id, title, coordinates, emoji, emojiCode }) => (
-              <Marker key={id} coordinates={coordinates}>
+              <Marker
+                key={id}
+                coordinates={coordinates}
+                style={{ zIndex: zIndexes[zIndexElements.MARKER] }}
+              >
                 <Clickable
                   onClick={({ currentTarget }) => {
                     // HACK: clear outline

@@ -12,3 +12,11 @@ export const track = options => {
     ...options,
   });
 };
+
+export const createConstants = (...constants) =>
+  constants.reduce((acc, constant) => {
+    acc[constant] = constant;
+    return acc;
+  }, {});
+
+export const isMobileDevice = () => window.innerHeight > window.innerWidth;
