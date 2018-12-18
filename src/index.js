@@ -2,16 +2,28 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import ReactMapboxGl, { Marker } from 'react-mapbox-gl';
+import ReactGA from 'react-ga';
 import keyBy from 'lodash/keyBy';
 
 import Clickable from './common/Clickable';
 import LegendModal from './LegendModal';
 
-import { ACCESS_TOKEN, LIGHT_STYLE, MINSK, BELARUS_BOUNDS, LegendShape } from './constants';
+import { track } from './utils';
+
+import {
+  MAPBOX_ACCESS_TOKEN,
+  GA_ID,
+  LIGHT_STYLE,
+  MINSK,
+  BELARUS_BOUNDS,
+  LegendShape,
+} from './constants';
 import './styles.scss';
 
 const Map = ReactMapboxGl({
-  accessToken: ACCESS_TOKEN,
+  accessToken: MAPBOX_ACCESS_TOKEN,
+  minZoom: 4,
+  maxZoom: 9,
 });
 
 // NOTE: When rendering many objects,
@@ -28,6 +40,15 @@ class App extends Component {
     super(props);
     this.legendsById = keyBy(this.props.legends, 'id');
     this.state = { activeLegendId: null };
+  }
+
+  componentDidMount() {
+    if (process.env.REACT_APP_WIR_ENV) {
+      ReactGA.initialize(GA_ID[process.env.REACT_APP_WIR_ENV], {
+        debug: false,
+      });
+      ReactGA.pageview(document.location.pathname);
+    }
   }
 
   setActiveLegendId = activeLegendId => this.setState({ activeLegendId });
@@ -55,11 +76,14 @@ class App extends Component {
         >
           {legends
             .filter(({ emoji }) => emoji)
-            .map(({ id, coordinates, emoji, emojiCode }) => (
+            .map(({ id, title, coordinates, emoji, emojiCode }) => (
               <Marker key={id} coordinates={coordinates}>
                 <Clickable
                   className="legends__marker"
-                  onClick={() => this.setState({ activeLegendId: id })}
+                  onClick={() => {
+                    track({ action: 'emoji-clicked', label: `${emoji} ${title}` });
+                    this.setState({ activeLegendId: id });
+                  }}
                 >
                   <img className="legends__emoji" alt={emoji} src={`./images/${emojiCode}.png`} />
                 </Clickable>
