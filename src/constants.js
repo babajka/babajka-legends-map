@@ -1,7 +1,12 @@
 import PropTypes from 'prop-types';
 
-export const ACCESS_TOKEN =
+export const MAPBOX_ACCESS_TOKEN =
   'pk.eyJ1IjoidWxhZGJvaGRhbiIsImEiOiJjam9kMDQ1NzYxOTYyM3FvanhpOXE1cDIzIn0.JiXb8lR9e53GqZz51PZdaQ';
+
+export const GA_ID = {
+  staging: 'UA-117143376-4',
+  production: 'UA-117143376-3',
+};
 
 const STYLE_PREFIX = 'mapbox://styles/uladbohdan';
 

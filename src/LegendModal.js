@@ -4,7 +4,7 @@ import formatcoords from 'formatcoords';
 import TextWithParagraphs from './common/TextWithParagraphs';
 
 import { LegendShape } from './constants';
-import { getGoogleMapsUrl } from './utils';
+import { getGoogleMapsUrl, track } from './utils';
 
 const LegendModal = ({ legend: { emoji, emojiCode, coordinates, title, text }, onClose }) => (
   <div className="legend__modal">
@@ -17,6 +17,7 @@ const LegendModal = ({ legend: { emoji, emojiCode, coordinates, title, text }, o
             href={getGoogleMapsUrl(coordinates)}
             rel="noopener noreferrer"
             target="_blank"
+            onClick={track.bind(null, { action: 'google-map-opened', label: `${emoji} ${title}` })}
           >
             {formatcoords(coordinates, true).format('DD MM X', {
               latLonSeparator: ', ',
