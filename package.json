@@ -10,8 +10,8 @@
     "postinstall": "npm i bin --production && npm run fetch-legends",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "predeploy": "npm run build",
-    "deploy": "REACT_APP_WIR_ENV=staging gh-pages -d build",
+    "predeploy": "REACT_APP_WIR_ENV=staging npm run build",
+    "deploy": "gh-pages -d build",
     "deploy:prod": "bash bin/deploy.sh"
   },
   "repository": {

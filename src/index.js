@@ -46,7 +46,7 @@ class App extends Component {
   componentDidMount() {
     if (process.env.REACT_APP_WIR_ENV) {
       ReactGA.initialize(GA_ID[process.env.REACT_APP_WIR_ENV], {
-        debug: false,
+        debug: process.env.REACT_APP_WIR_ENV !== 'production',
       });
       ReactGA.pageview(document.location.pathname);
     }
