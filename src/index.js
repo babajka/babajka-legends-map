@@ -10,7 +10,7 @@ import Title from './common/Title';
 import Wir from './common/Wir';
 import LegendModal from './LegendModal';
 
-import { track, isMobileDevice } from './utils';
+import { track, isDesktopDevice } from './utils';
 
 import {
   MAPBOX_ACCESS_TOKEN,
@@ -82,7 +82,7 @@ class App extends Component {
   resizeMap = () => {
     const { activeLegendId } = this.state;
     this.map.resize();
-    this.map.fitBounds(BELARUS_BOUNDS, getFitBoundsOptions(isMobileDevice() && !activeLegendId));
+    this.map.fitBounds(BELARUS_BOUNDS, getFitBoundsOptions(isDesktopDevice() && !activeLegendId));
   };
 
   setActiveLegendId = activeLegendId => this.setState({ activeLegendId }, this.resizeMap);
@@ -103,7 +103,7 @@ class App extends Component {
             zIndex: zIndexes[zIndexElements.MAP],
           }}
           fitBounds={BELARUS_BOUNDS}
-          fitBoundsOptions={getFitBoundsOptions(isMobileDevice() && !activeLegendId)}
+          fitBoundsOptions={getFitBoundsOptions(isDesktopDevice() && !activeLegendId)}
           center={MINSK}
           onZoom={this.handleZoom}
           // HACK: same `map` object

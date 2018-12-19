@@ -36,14 +36,14 @@ a {
   align-items: center;
   bottom: 0;
   display: flex;
-  font-size: 1.15rem;
+  font-size: 0.95rem;
   left: 0;
   padding: 1rem;
   position: fixed;
 
   @media (min-width: $desktop) {
     font-size: 1.4rem;
-    padding: 2rem;
+    padding: 1rem;
   }
 
   &__logo {
