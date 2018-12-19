@@ -2,6 +2,8 @@ $primary: #1a9582;
 
 $desktop: 1024px;
 
+$semiTransparent: rgba(255, 255, 255, 0.5);
+
 body {
   padding: 0;
   margin: 0;
@@ -19,6 +21,7 @@ a {
 }
 
 .title {
+  background: $semiTransparent;
   font-size: 3rem;
   font-weight: bold;
   left: 0;
@@ -36,6 +39,7 @@ a {
 
 .wir {
   align-items: center;
+  background: $semiTransparent;
   bottom: 0;
   display: flex;
   font-size: 0.95rem;
@@ -70,7 +74,7 @@ a {
     background: white;
 
     @media (min-width: $desktop) {
-      background: rgba(255, 255, 255, 0.5);
+      background: $semiTransparent;
     }
   }
 
