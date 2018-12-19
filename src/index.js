@@ -34,6 +34,10 @@ const Map = ReactMapboxGl({
 // Use `Layers` and `Features` instead.
 // https://github.com/alex3165/react-mapbox-gl/blob/master/docs/API.md#marker
 
+const fitBoundsOptions = {
+  padding: 25,
+};
+
 class App extends Component {
   static propTypes = {
     legends: PropTypes.arrayOf(LegendShape).isRequired,
@@ -46,12 +50,17 @@ class App extends Component {
   }
 
   componentDidMount() {
+    window.addEventListener('resize', this.resizeMap);
     if (process.env.REACT_APP_WIR_ENV) {
       ReactGA.initialize(GA_ID[process.env.REACT_APP_WIR_ENV], {
         debug: process.env.REACT_APP_WIR_ENV !== 'production',
       });
       ReactGA.pageview(document.location.pathname);
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resizeMap);
   }
 
   handleZoom = map => {
@@ -62,7 +71,12 @@ class App extends Component {
     }
   };
 
-  setActiveLegendId = activeLegendId => this.setState({ activeLegendId });
+  resizeMap = () => {
+    this.map.resize();
+    this.map.fitBounds(BELARUS_BOUNDS, fitBoundsOptions);
+  };
+
+  setActiveLegendId = activeLegendId => this.setState({ activeLegendId }, this.resizeMap);
 
   render() {
     const { legends } = this.props;
@@ -74,27 +88,32 @@ class App extends Component {
           style={LIGHT_STYLE}
           containerStyle={{
             position: 'absolute',
-            top: 0,
+            top: activeLegendId ? 150 : 0,
             bottom: 0,
-            width: '100%',
+            width: activeLegendId ? '50%' : '100%',
           }}
-          // TODO: fix calling `fitBounds` on window resizing
           fitBounds={BELARUS_BOUNDS}
-          fitBoundsOptions={{
-            padding: 25,
-          }}
+          fitBoundsOptions={fitBoundsOptions}
           center={MINSK}
           onZoom={this.handleZoom}
+          // HACK: same `map` object
+          onSourceDataLoading={map => {
+            if (!this.map) {
+              this.map = map;
+            }
+          }}
         >
-          <ZoomControl style={{ zIndex: 1 }} />
+          {!activeLegendId && <ZoomControl style={{ zIndex: 1 }} />}
           {legends
-            .filter(({ emoji }) => emoji)
+            .filter(({ id }) => !activeLegendId || id === activeLegendId)
             .map(({ id, title, coordinates, emoji, emojiCode }) => (
               <Marker key={id} coordinates={coordinates}>
                 <Clickable
-                  onClick={() => {
+                  onClick={({ currentTarget }) => {
+                    // HACK: clear outline
+                    currentTarget.blur();
                     track({ action: 'emoji-clicked', label: `${emoji} ${title}` });
-                    this.setState({ activeLegendId: id });
+                    this.setActiveLegendId(id);
                   }}
                 >
                   <img
