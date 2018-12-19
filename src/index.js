@@ -113,7 +113,7 @@ class App extends Component {
             }
           }}
         >
-          <ZoomControl style={{ zIndex: zIndexes[zIndexElements.CONTROLS] }} />
+          {!activeLegendId && <ZoomControl style={{ zIndex: zIndexes[zIndexElements.CONTROLS] }} />}
           {legends
             .filter(({ id }) => !activeLegendId || id === activeLegendId)
             .map(({ id, title, coordinates, emoji, emojiCode }) => (

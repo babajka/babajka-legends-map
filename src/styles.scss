@@ -22,12 +22,14 @@ a {
   font-size: 3rem;
   font-weight: bold;
   left: 0;
+  line-height: 3rem;
   padding: 1rem;
   position: fixed;
   top: 0;
 
   @media (min-width: $desktop) {
     font-size: 3.5rem;
+    line-height: 3.5rem;
     padding: 2rem;
   }
 }
@@ -38,6 +40,7 @@ a {
   display: flex;
   font-size: 0.95rem;
   left: 0;
+  max-width: 65%;
   padding: 1rem;
   position: fixed;
 
