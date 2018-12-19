@@ -93,6 +93,9 @@ a {
   }
 
   &__right {
+    display: flex;
+    flex-direction: column;
+
     @media (min-width: $desktop) {
       padding: 1rem;
       width: 50%;
