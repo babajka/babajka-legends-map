@@ -19,4 +19,4 @@ export const createConstants = (...constants) =>
     return acc;
   }, {});
 
-export const isMobileDevice = () => window.innerHeight > window.innerWidth;
+export const isDesktopDevice = () => window.innerHeight < window.innerWidth;
