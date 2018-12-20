@@ -37,10 +37,10 @@ const Map = ReactMapboxGl({
 // Use `Layers` and `Features` instead.
 // https://github.com/alex3165/react-mapbox-gl/blob/master/docs/API.md#marker
 
-const getFitBoundsOptions = (rightShift = false) => ({
+const getFitBoundsOptions = ({ rightShift, topShift }) => ({
   padding: {
     left: rightShift ? 250 : 25,
-    top: 25,
+    top: topShift ? 100 : 25,
     bottom: 25,
     right: 25,
   },
@@ -79,10 +79,17 @@ class App extends Component {
     }
   };
 
-  resizeMap = () => {
+  calculateShifts = () => {
     const { activeLegendId } = this.state;
+    return {
+      rightShift: isDesktopDevice() && !activeLegendId,
+      topShift: !isDesktopDevice(),
+    };
+  };
+
+  resizeMap = () => {
     this.map.resize();
-    this.map.fitBounds(BELARUS_BOUNDS, getFitBoundsOptions(isDesktopDevice() && !activeLegendId));
+    this.map.fitBounds(BELARUS_BOUNDS, getFitBoundsOptions(this.calculateShifts()));
   };
 
   setActiveLegendId = activeLegendId => this.setState({ activeLegendId }, this.resizeMap);
@@ -103,7 +110,7 @@ class App extends Component {
             zIndex: zIndexes[zIndexElements.MAP],
           }}
           fitBounds={BELARUS_BOUNDS}
-          fitBoundsOptions={getFitBoundsOptions(isDesktopDevice() && !activeLegendId)}
+          fitBoundsOptions={getFitBoundsOptions(this.calculateShifts())}
           center={MINSK}
           onZoom={this.handleZoom}
           // HACK: same `map` object
