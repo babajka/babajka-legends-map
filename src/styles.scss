@@ -21,25 +21,23 @@ a {
 }
 
 .title {
-  background: $semiTransparent;
+  // background: $semiTransparent;
   font-size: 3rem;
   font-weight: bold;
   left: 0;
-  line-height: 3rem;
   padding: 1rem;
   position: fixed;
   top: 0;
 
   @media (min-width: $desktop) {
     font-size: 3.5rem;
-    line-height: 3.5rem;
     padding: 2rem;
   }
 }
 
 .wir {
   align-items: center;
-  background: $semiTransparent;
+  // background: $semiTransparent;
   bottom: 0;
   display: flex;
   font-size: 0.95rem;
