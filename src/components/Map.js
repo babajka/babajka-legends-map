@@ -120,6 +120,7 @@ class Map extends Component {
                 style={{ zIndex: zIndexes[zIndexElements.MARKER] }}
               >
                 <Clickable
+                  className="legends__marker"
                   onClick={({ currentTarget }) => {
                     // HACK: clear outline
                     currentTarget.blur();
