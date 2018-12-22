@@ -4,6 +4,7 @@ import formatcoords from 'formatcoords';
 import Title from './Title';
 import Wir from './Wir';
 import TextWithParagraphs from './TextWithParagraphs';
+import CrossSvgIcon from './CrossSvgIcon';
 
 import { LegendShape, zIndexes, zIndexElements } from '../constants';
 import { getGoogleMapsUrl, track } from '../utils';
@@ -39,7 +40,7 @@ const LegendModal = ({ legend: { emoji, emojiCode, coordinates, title, text }, o
         </div>
       </div>
       <button className="legend__close-button" onClick={onClose}>
-        <i className="legend__close-icon fa fa-times" />
+        <CrossSvgIcon className="legend__close-icon" />
       </button>
     </div>
   </div>
