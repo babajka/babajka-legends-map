@@ -1,12 +1,12 @@
 import React from 'react';
 import formatcoords from 'formatcoords';
 
-import Title from './common/Title';
-import Wir from './common/Wir';
-import TextWithParagraphs from './common/TextWithParagraphs';
+import Title from './Title';
+import Wir from './Wir';
+import TextWithParagraphs from './TextWithParagraphs';
 
-import { LegendShape, zIndexes, zIndexElements } from './constants';
-import { getGoogleMapsUrl, track } from './utils';
+import { LegendShape, zIndexes, zIndexElements } from '../constants';
+import { getGoogleMapsUrl, track } from '../utils';
 
 const LegendModal = ({ legend: { emoji, emojiCode, coordinates, title, text }, onClose }) => (
   <div className="legend__modal" style={{ zIndex: zIndexes[zIndexElements.LEGENDS_MODAL] }}>
