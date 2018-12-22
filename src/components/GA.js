@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
 
 import { GA_ID } from '../constants';
+import { clearUtmParams } from '../utils';
 
 class GA extends Component {
   static propTypes = {
@@ -14,7 +15,9 @@ class GA extends Component {
       ReactGA.initialize(GA_ID[process.env.REACT_APP_WIR_ENV], {
         debug: process.env.REACT_APP_WIR_ENV !== 'production',
       });
-      ReactGA.pageview(document.location.pathname);
+      ReactGA.ga('send', 'pageview', window.location.pathname, {
+        hitCallback: clearUtmParams,
+      });
     }
   }
 
