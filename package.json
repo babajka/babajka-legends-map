@@ -7,12 +7,13 @@
   "scripts": {
     "fetch-legends": "node bin/fetchLegends.js",
     "scrap-emojis": "node bin/emojipediaScrapper.js",
-    "postinstall": "npm i bin --production && npm run fetch-legends",
+    "postinstall": "cd bin && npm i --production && npm run fetch-legends",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "predeploy": "REACT_APP_WIR_ENV=staging npm run build",
     "deploy": "gh-pages -d build",
     "deploy:prod": "bash bin/deploy.sh",
+    "lint": "eslint --ignore-path .gitignore --fix .",
     "prettier": "prettier --write",
     "prettier-stylelint": "prettier-stylelint --write"
   },
@@ -26,12 +27,12 @@
     "url": "https://github.com/babajka/babajka-legends-map/issues"
   },
   "dependencies": {
-    "babajka-legends-map-bin": "file:bin",
     "classnames": "^2.2.6",
     "formatcoords": "^1.1.3",
     "lodash": "^4.17.11",
-    "mapbox-gl": "^0.52.0-beta.1",
+    "mapbox-gl": "^0.52.0",
     "node-sass": "^4.11.0",
+    "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-ga": "^2.5.6",
@@ -39,10 +40,14 @@
     "react-scripts": "^2.1.1"
   },
   "devDependencies": {
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
     "gh-pages": "^2.0.1",
     "husky": "^1.2.1",
     "lint-staged": "^8.1.0",
-    "prettier": "1.15.3",
+    "prettier": "^1.15.3",
     "prettier-stylelint": "^0.4.2",
     "stylelint-config-idiomatic-order": "^6.2.0"
   },
