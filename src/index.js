@@ -5,10 +5,11 @@ import GA from './components/GA';
 import Map from './components/Map';
 
 import './styles.scss';
+import legends from './legends.json';
 
 const App = () => (
   <GA>
-    <Map legends={require('./legends')} />
+    <Map legends={legends} />
   </GA>
 );
 

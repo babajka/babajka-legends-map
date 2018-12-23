@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactMapboxGl, { Marker, ZoomControl } from 'react-mapbox-gl';
 import keyBy from 'lodash/keyBy';
 
-import Clickable from './Clickable';
+import Clickable from './common/Clickable';
 import Title from './Title';
 import Wir from './Wir';
 import LegendModal from './LegendModal';
@@ -49,7 +49,7 @@ class Map extends Component {
 
   constructor(props) {
     super(props);
-    this.legendsById = keyBy(this.props.legends, 'id');
+    this.legendsById = keyBy(props.legends, 'id');
     this.state = { activeLegendId: null };
   }
 
@@ -90,54 +90,58 @@ class Map extends Component {
     const activeLegend = this.legendsById[activeLegendId];
     return (
       <>
-        <Mapbox
-          style={LIGHT_STYLE}
-          containerStyle={{
-            position: 'absolute',
-            top: activeLegendId ? 150 : 0,
-            bottom: 0,
-            width: activeLegendId ? '50%' : '100%',
-            zIndex: zIndexes[zIndexElements.MAP],
-          }}
-          fitBounds={BELARUS_BOUNDS}
-          fitBoundsOptions={getFitBoundsOptions(this.calculateShifts())}
-          center={MINSK}
-          onZoom={this.handleZoom}
-          // HACK: same `map` object
-          onSourceDataLoading={map => {
-            if (!this.map) {
-              this.map = map;
-            }
-          }}
-        >
-          {!activeLegendId && <ZoomControl style={{ zIndex: zIndexes[zIndexElements.CONTROLS] }} />}
-          {legends
-            .filter(({ id }) => !activeLegendId || id === activeLegendId)
-            .map(({ id, title, coordinates, emoji, emojiCode }) => (
-              <Marker
-                key={id}
-                coordinates={coordinates}
-                style={{ zIndex: zIndexes[zIndexElements.MARKER] }}
-              >
-                <Clickable
-                  className="legends__marker"
-                  onClick={({ currentTarget }) => {
-                    // HACK: clear outline
-                    currentTarget.blur();
-                    track({ action: 'emoji-clicked', label: `${emoji} ${title}` });
-                    this.setActiveLegendId(id);
-                  }}
-                >
-                  <img
-                    alt={emoji}
-                    src={`./images/${emojiCode}.png`}
-                    width={zoom * EMOJI_SCALE_RATE}
-                  />
-                </Clickable>
-              </Marker>
-            ))}
-        </Mapbox>
         <Title />
+        <main>
+          <Mapbox
+            style={LIGHT_STYLE}
+            containerStyle={{
+              position: 'absolute',
+              top: activeLegendId ? 150 : 0,
+              bottom: 0,
+              width: activeLegendId ? '50%' : '100%',
+              zIndex: zIndexes[zIndexElements.MAP],
+            }}
+            fitBounds={BELARUS_BOUNDS}
+            fitBoundsOptions={getFitBoundsOptions(this.calculateShifts())}
+            center={MINSK}
+            onZoom={this.handleZoom}
+            // HACK: same `map` object
+            onSourceDataLoading={map => {
+              if (!this.map) {
+                this.map = map;
+              }
+            }}
+          >
+            {!activeLegendId && (
+              <ZoomControl style={{ zIndex: zIndexes[zIndexElements.CONTROLS] }} />
+            )}
+            {legends
+              .filter(({ id }) => !activeLegendId || id === activeLegendId)
+              .map(({ id, title, coordinates, emoji, emojiCode }) => (
+                <Marker
+                  key={id}
+                  coordinates={coordinates}
+                  style={{ zIndex: zIndexes[zIndexElements.MARKER] }}
+                >
+                  <Clickable
+                    className="legends__marker"
+                    onClick={({ currentTarget }) => {
+                      // HACK: clear outline
+                      currentTarget.blur();
+                      track({ action: 'emoji-clicked', label: `${emoji} ${title}` });
+                      this.setActiveLegendId(id);
+                    }}
+                  >
+                    <img
+                      alt={emoji}
+                      src={`./images/${emojiCode}.png`}
+                      width={zoom * EMOJI_SCALE_RATE}
+                    />
+                  </Clickable>
+                </Marker>
+              ))}
+          </Mapbox>
+        </main>
         <Wir />
         {activeLegend && (
           <LegendModal legend={activeLegend} onClose={() => this.setActiveLegendId(null)} />
