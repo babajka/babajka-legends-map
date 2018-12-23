@@ -130,7 +130,7 @@ class Map extends Component {
                     >
                       <img
                         alt={emoji}
-                        src={`./images/${emojiCode}.png`}
+                        src={`./images/${emojiCode}-72.png`}
                         width={zoom * EMOJI_SCALE_RATE}
                       />
                     </Clickable>
