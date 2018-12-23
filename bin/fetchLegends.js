@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /*
-    https://docs.google.com/spreadsheets/d/1wSHPtMNAA34D2B4GGKA_N3Hfh0Pkfj176OpUArsnrME
+  https://docs.google.com/spreadsheets/d/1wSHPtMNAA34D2B4GGKA_N3Hfh0Pkfj176OpUArsnrME
  */
 const { writeFileSync } = require('fs');
 const keyBy = require('lodash/keyBy');
