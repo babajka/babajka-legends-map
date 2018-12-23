@@ -11,6 +11,7 @@
     "start": "react-scripts start",
     "lint": "npm run eslint .",
     "build": "react-scripts build",
+    "analyze": "node bin/analyze.js",
     "predeploy": "REACT_APP_WIR_ENV=staging npm run build",
     "deploy": "gh-pages -d build",
     "deploy:prod": "bash bin/deploy.sh",
@@ -30,7 +31,6 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "formatcoords": "^1.1.3",
-    "lodash": "^4.17.11",
     "mapbox-gl": "^0.52.0",
     "node-sass": "^4.11.0",
     "prop-types": "^15.6.2",
