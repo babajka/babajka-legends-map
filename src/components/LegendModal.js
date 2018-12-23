@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import formatcoords from 'formatcoords';
 
+import TextWithParagraphs from './common/TextWithParagraphs';
 import Title from './Title';
 import Wir from './Wir';
-import TextWithParagraphs from './TextWithParagraphs';
 import CrossSvgIcon from './CrossSvgIcon';
 
 import { LegendShape, zIndexes, zIndexElements } from '../constants';
@@ -39,7 +40,13 @@ const LegendModal = ({ legend: { emoji, emojiCode, coordinates, title, text }, o
           <TextWithParagraphs text={text} />
         </div>
       </div>
-      <button className="legend__close-button" onClick={onClose}>
+      <button
+        type="button"
+        className="legend__close-button"
+        onClick={onClose}
+        // eslint-disable-next-line jsx-a11y/no-autofocus
+        autoFocus="autofocus"
+      >
         <CrossSvgIcon className="legend__close-icon" />
       </button>
     </div>
@@ -48,6 +55,7 @@ const LegendModal = ({ legend: { emoji, emojiCode, coordinates, title, text }, o
 
 LegendModal.propTypes = {
   legend: LegendShape.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default LegendModal;

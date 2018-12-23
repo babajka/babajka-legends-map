@@ -6,6 +6,7 @@ const TextWithParagraphs = ({ text }) => {
   const lastParagraphIndex = paragraphs.length - 1;
 
   return paragraphs.map((paragraph, i) => (
+    // eslint-disable-next-line react/no-array-index-key
     <Fragment key={i}>
       {paragraph}
       {i < lastParagraphIndex && (

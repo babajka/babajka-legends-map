@@ -1,25 +1,29 @@
 #!/usr/bin/env node
 
-const rp = require('request-promise');
-const $ = require('cheerio');
+/*
+  eslint-disable import/no-extraneous-dependencies
+ */
+
 const fs = require('fs');
 const request = require('request');
+const rp = require('request-promise');
+const $ = require('cheerio');
 const legends = require('../src/legends.json');
 
-const url = 'https://emojipedia.org/apple';
+const emojisUrl = 'https://emojipedia.org/apple';
 const codes = legends.map(({ emojiCode }) => emojiCode).filter(Boolean);
 const EMOJI_CODE_REGEXP = /_(?!emoji-modifier)(\S+)\.png/;
 
 const saveImage = ({ url, code }) =>
-  new Promise((resolve, reject) =>
-    request.head(url, (err, res, body) =>
+  new Promise(resolve =>
+    request.head(url, () =>
       request(url)
         .pipe(fs.createWriteStream(`public/images/${code}.png`))
         .on('close', resolve)
     )
   );
 
-rp(url)
+rp(emojisUrl)
   .then(html => {
     const images = Object.values($('a > img', html));
     const data = images
@@ -36,5 +40,6 @@ rp(url)
       });
     return Promise.all(data.map(saveImage));
   })
+  // eslint-disable-next-line no-console
   .then(res => console.log(`> successfully scraped ${res.length}/${codes.length} images`))
   .catch(console.error);
