@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import formatcoords from 'formatcoords';
 
+import OnEscape from './common/OnEscape';
+import Clickable from './common/Clickable';
 import TextWithParagraphs from './common/TextWithParagraphs';
 import Title from './Title';
 import Wir from './Wir';
@@ -13,11 +15,11 @@ import { getGoogleMapsUrl, track } from '../utils';
 const LegendModal = ({ legend: { emoji, emojiCode, coordinates, title, text }, onClose }) => (
   <div className="legend__modal" style={{ zIndex: zIndexes[zIndexElements.LEGENDS_MODAL] }}>
     <div className="legend__content">
-      <div className="legend__left">
+      <Clickable className="legend__left" onClick={onClose}>
         <Title />
         <img className="legend__emoji" src={`./images/${emojiCode}.png`} alt={title} />
         <Wir />
-      </div>
+      </Clickable>
       <div className="legend__right">
         <div className="legend__top">
           <div className="legend__emoji-wrapper">
@@ -49,6 +51,7 @@ const LegendModal = ({ legend: { emoji, emojiCode, coordinates, title, text }, o
       >
         <CrossSvgIcon className="legend__close-icon" />
       </button>
+      <OnEscape action={onClose} />
     </div>
   </div>
 );

@@ -9,11 +9,12 @@
     "scrap-emojis": "node bin/emojipediaScrapper.js",
     "postinstall": "cd bin && npm i --production && npm run fetch-legends",
     "start": "react-scripts start",
+    "lint": "npm run eslint .",
     "build": "react-scripts build",
     "predeploy": "REACT_APP_WIR_ENV=staging npm run build",
     "deploy": "gh-pages -d build",
     "deploy:prod": "bash bin/deploy.sh",
-    "lint": "eslint --ignore-path .gitignore --fix .",
+    "eslint": "eslint --ignore-path .gitignore --fix",
     "prettier": "prettier --write",
     "prettier-stylelint": "prettier-stylelint --write"
   },
