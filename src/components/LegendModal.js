@@ -12,18 +12,22 @@ import CrossSvgIcon from './CrossSvgIcon';
 import { LegendShape, zIndexes, zIndexElements } from '../constants';
 import { getGoogleMapsUrl, track } from '../utils';
 
-const LegendModal = ({ legend: { emoji, emojiCode, coordinates, title, text }, onClose }) => (
+const LegendEmoji = ({ legend: { emojiCode, emoji } }) => (
+  <img className="legend__emoji" src={`./images/${emojiCode}-144.png`} alt={emoji} />
+);
+
+const LegendModal = ({ legend: { emoji, coordinates, title, text }, legend, onClose }) => (
   <div className="legend__modal" style={{ zIndex: zIndexes[zIndexElements.LEGENDS_MODAL] }}>
     <div className="legend__content">
       <Clickable className="legend__left" onClick={onClose}>
         <Title />
-        <img className="legend__emoji" src={`./images/${emojiCode}.png`} alt={title} />
+        <LegendEmoji legend={legend} />
         <Wir />
       </Clickable>
       <div className="legend__right">
         <div className="legend__top">
           <div className="legend__emoji-wrapper">
-            <img className="legend__emoji" src={`./images/${emojiCode}.png`} alt={title} />
+            <LegendEmoji legend={legend} />
           </div>
           <a
             href={getGoogleMapsUrl(coordinates)}
