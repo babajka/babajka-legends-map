@@ -9,7 +9,7 @@ const Wir = () => (
       зроблена камандай
       <a
         className="wir__link"
-        href="http://wir.by?utm_source=map"
+        href="https://wir.by?utm_source=map"
         target="_blank"
         rel="noreferrer noopener"
       >
