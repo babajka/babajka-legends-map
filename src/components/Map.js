@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactMapboxGl, { Marker, ZoomControl } from 'react-mapbox-gl';
 
-import Clickable from 'components/common/Clickable';
+import Clickable from 'lib/components/Clickable';
 import Title from 'components/Title';
 import Wir from 'components/Wir';
 import LegendModal from 'components/LegendModal';

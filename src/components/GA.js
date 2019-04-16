@@ -2,7 +2,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
 
-import { clearUtmParams } from 'utils';
+import clearUtmParams from 'lib/utils/clearUtmParams';
 
 import { GA_ID } from '../constants';
 
