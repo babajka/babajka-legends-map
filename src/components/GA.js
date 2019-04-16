@@ -2,8 +2,9 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
 
+import { clearUtmParams } from 'utils';
+
 import { GA_ID } from '../constants';
-import { clearUtmParams } from '../utils';
 
 class GA extends Component {
   static propTypes = {

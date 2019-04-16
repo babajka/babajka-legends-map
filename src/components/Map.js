@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactMapboxGl, { Marker, ZoomControl } from 'react-mapbox-gl';
 
-import Clickable from './common/Clickable';
-import Title from './Title';
-import Wir from './Wir';
-import LegendModal from './LegendModal';
+import Clickable from 'components/common/Clickable';
+import Title from 'components/Title';
+import Wir from 'components/Wir';
+import LegendModal from 'components/LegendModal';
 
-import { track, isDesktopDevice } from '../utils';
+import { track, isDesktopDevice } from 'utils';
 
 import {
   MAPBOX_ACCESS_TOKEN,

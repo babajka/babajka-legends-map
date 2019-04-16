@@ -1,11 +1,13 @@
 import React from 'react';
 
-import StopClickPropagation from './common/StopClickPropagation';
+import StopClickPropagation from 'components/common/StopClickPropagation';
+import Logo from 'assets/logo/Logo';
+
 import { zIndexes, zIndexElements } from '../constants';
 
 const Wir = () => (
   <div className="wir" style={{ zIndex: zIndexes[zIndexElements.LABELS] }}>
-    <img className="wir__logo" src="./favicon.png" alt="Wir.by" />
+    <Logo size={32} className="wir__logo" />
     <StopClickPropagation>
       зроблена камандай
       <a

@@ -2,15 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import formatcoords from 'formatcoords';
 
-import OnEscape from './common/OnEscape';
-import Clickable from './common/Clickable';
-import TextWithParagraphs from './common/TextWithParagraphs';
-import Title from './Title';
-import Wir from './Wir';
-import CrossSvgIcon from './CrossSvgIcon';
+import OnEscape from 'components/common/OnEscape';
+import Clickable from 'components/common/Clickable';
+import TextWithParagraphs from 'components/common/TextWithParagraphs';
 
+import Title from 'components/Title';
+import Wir from 'components/Wir';
+import CrossSvgIcon from 'components/CrossSvgIcon';
+
+import { getGoogleMapsUrl, track } from 'utils';
 import { LegendShape, zIndexes, zIndexElements } from '../constants';
-import { getGoogleMapsUrl, track } from '../utils';
 
 const LegendEmoji = ({ legend: { emojiCode, emoji } }) => (
   <img className="legend__emoji" src={`./images/${emojiCode}-144.png`} alt={emoji} />

@@ -5,6 +5,13 @@ module.exports = {
   env: {
     browser: true,
   },
+  settings: {
+    'import/resolver': {
+      node: {
+        moduleDirectory: ['node_modules', 'src'],
+      },
+    },
+  },
   rules: {
     // prettier overrides
     'prettier/prettier': 'error',
