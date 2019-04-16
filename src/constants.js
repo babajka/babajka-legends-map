@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { createConstants } from './utils';
+import { createConstants } from 'utils';
 
 export const MAPBOX_ACCESS_TOKEN =
   'pk.eyJ1IjoidWxhZGJvaGRhbiIsImEiOiJjam9kMDQ1NzYxOTYyM3FvanhpOXE1cDIzIn0.JiXb8lR9e53GqZz51PZdaQ';

@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import GA from './components/GA';
-import Map from './components/Map';
+import GA from 'components/GA';
+import Map from 'components/Map';
 
-import './styles.scss';
-import legends from './legends.json';
+import 'styles.scss';
+import legends from 'legends.json';
 
 const App = () => (
   <GA>
