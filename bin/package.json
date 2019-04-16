@@ -2,20 +2,13 @@
   "name": "babajka-legends-map-bin",
   "version": "1.0.0",
   "description": "",
-  "main": "emojipediaScrapper.js",
-  "scripts": {
-    "fetch-legends": "node fetchLegends.js",
-    "scrap-emojis": "node emojipediaScrapper.js",
-    "analyze": "cd .. && npm run analyze"
-  },
   "author": "babajka team <github.com/babajka>",
   "license": "Apache-2.0",
   "devDependencies": {
     "cheerio": "^1.0.0-rc.2",
     "puppeteer": "^1.11.0",
     "request": "^2.88.0",
-    "request-promise": "^4.2.2",
-    "webpack-bundle-analyzer": "^3.0.3"
+    "request-promise": "^4.2.2"
   },
   "dependencies": {
     "google-spreadsheet": "^2.0.6",
