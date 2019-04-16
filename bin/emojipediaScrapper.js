@@ -4,27 +4,46 @@
   eslint-disable import/no-extraneous-dependencies
  */
 
-const fs = require('fs');
+// 112
+// 30
+
 const request = require('request');
 const rp = require('request-promise');
 const $ = require('cheerio');
+const sharp = require('sharp');
+
 const legends = require('../src/legends.json');
 
 const emojisUrl = 'https://emojipedia.org/apple';
 const codes = legends.map(({ emojiCode }) => emojiCode).filter(Boolean);
 const EMOJI_CODE_REGEXP = /_(?!emoji-modifier)(\S+)\.png/;
 
-const saveImage = (url, code, size) =>
+const saveImage = (url, code) =>
   new Promise(resolve =>
-    request.head(url, () =>
-      request(url)
-        .pipe(fs.createWriteStream(`public/images/${code}-${size}.png`))
-        .on('close', resolve)
+    // request.head(url, () =>
+    //   request(url)
+    //     .pipe(fs.createWriteStream(`public/images/${code}-${size}.png`))
+    //     .on('close', resolve)
+    // )
+    request.get({ url, encoding: 'binary' }, (err, res) =>
+      resolve(
+        sharp(res.body)
+          .resize(30)
+          .png({ compressionLevel: 9 })
+          .toFile(`public/images/${code}-small.png`)
+      )
     )
   );
 
+// eslint-disable-next-line
 const saveImages = ({ smallUrl, largeUrl, code }) =>
-  Promise.all([saveImage(smallUrl, code, '72'), saveImage(largeUrl, code, '144')]);
+  Promise.all([
+    // sharp(largeUrl)
+    //   .resize(30)
+    //   .png({ compressionLevel: 9 })
+    //   .toFile(`public/images/${code}-small.png`),
+    saveImage(largeUrl, code, '144'),
+  ]);
 
 rp(emojisUrl)
   .then(html => {

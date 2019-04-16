@@ -13,7 +13,8 @@ class GA extends Component {
   componentDidMount() {
     if (process.env.REACT_APP_WIR_ENV) {
       ReactGA.initialize(GA_ID[process.env.REACT_APP_WIR_ENV], {
-        debug: process.env.REACT_APP_WIR_ENV !== 'production',
+        // debug: process.env.REACT_APP_WIR_ENV !== 'production',
+        debug: false,
       });
       ReactGA.ga('send', 'pageview', window.location.pathname, {
         hitCallback: clearUtmParams,

@@ -12,7 +12,7 @@
     "lint": "npm run eslint .",
     "build": "react-scripts build",
     "analyze": "node bin/analyze.js",
-    "predeploy": "REACT_APP_WIR_ENV=staging npm run build",
+    "predeploy": "GENERATE_SOURCEMAP=false REACT_APP_WIR_ENV=staging npm run build",
     "deploy": "gh-pages -d build",
     "deploy:prod": "bash bin/deploy.sh",
     "eslint": "eslint --ignore-path .gitignore --fix",

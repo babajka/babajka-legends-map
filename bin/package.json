@@ -15,6 +15,7 @@
     "puppeteer": "^1.11.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
+    "sharp": "^0.21.1",
     "webpack-bundle-analyzer": "^3.0.3"
   },
   "dependencies": {
