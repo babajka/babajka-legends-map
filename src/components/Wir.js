@@ -1,6 +1,6 @@
 import React from 'react';
 
-import StopClickPropagation from 'components/common/StopClickPropagation';
+import StopClickPropagation from 'lib/components/StopClickPropagation';
 import Logo from 'assets/logo/Logo';
 
 import { zIndexes, zIndexElements } from '../constants';

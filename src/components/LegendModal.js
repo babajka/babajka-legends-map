@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import formatcoords from 'formatcoords';
 
-import OnEscape from 'components/common/OnEscape';
-import Clickable from 'components/common/Clickable';
-import TextWithParagraphs from 'components/common/TextWithParagraphs';
+import Clickable from 'lib/components/Clickable';
+import TextWithSeparator from 'lib/components/TextWithSeparator';
+import OnEscape from 'lib/components/OnEscape';
 
 import Title from 'components/Title';
 import Wir from 'components/Wir';
@@ -44,7 +44,16 @@ const LegendModal = ({ legend: { emoji, coordinates, title, text }, legend, onCl
           <div className="legend__title">{title}</div>
         </div>
         <div className="legend__text">
-          <TextWithParagraphs text={text} />
+          <TextWithSeparator
+            text={text}
+            symbol="\n"
+            separator={
+              <>
+                <br />
+                <br />
+              </>
+            }
+          />
         </div>
       </div>
       <button

@@ -20,11 +20,3 @@ export const createConstants = (...constants) =>
   }, {});
 
 export const isDesktopDevice = () => window.innerHeight < window.innerWidth;
-
-export const clearUtmParams = () => {
-  const { location, history } = window;
-  const isUtmsInQuery = location.search.indexOf('utm_') !== -1;
-  if (isUtmsInQuery && history.replaceState) {
-    history.replaceState({}, '', location.toString().replace(/(&|\?)utm([_a-z0-9=]+)/g, ''));
-  }
-};
