@@ -3,20 +3,18 @@ import ReactGA from 'react-ga';
 export const getGoogleMapsUrl = ([lng, lat], zoom = 7) =>
   `http://www.google.com/maps/place/${lat},${lng}/@${lat},${lng},${zoom}z`;
 
+export const pageView = options => {
+  if (!process.env.REACT_APP_WIR_ENV) {
+    return;
+  }
+  ReactGA.ga('send', 'pageview', window.location.pathname, options);
+};
+
 export const track = options => {
   if (!process.env.REACT_APP_WIR_ENV) {
     return;
   }
-  ReactGA.event({
-    category: 'Legends Map',
-    ...options,
-  });
+  ReactGA.event({ category: 'Legends Map', ...options });
 };
-
-export const createConstants = (...constants) =>
-  constants.reduce((acc, constant) => {
-    acc[constant] = constant;
-    return acc;
-  }, {});
 
 export const isDesktopDevice = () => window.innerHeight < window.innerWidth;

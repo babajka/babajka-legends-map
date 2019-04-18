@@ -1,78 +1,84 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import formatcoords from 'formatcoords';
+import { Link, navigate } from '@reach/router';
 
-import Clickable from 'lib/components/Clickable';
 import TextWithSeparator from 'lib/components/TextWithSeparator';
 import OnEscape from 'lib/components/OnEscape';
 
-import Title from 'components/Title';
-import Wir from 'components/Wir';
+import Header from 'components/layout/Header';
+import Footer from 'components/layout/Footer';
 import CrossSvgIcon from 'components/CrossSvgIcon';
 
-import { getGoogleMapsUrl, track } from 'utils';
-import { LegendShape, zIndexes, zIndexElements } from '../constants';
+import { getGoogleMapsUrl, track, pageView } from 'utils';
+import { LegendShape, zIndexes, zIndexElements } from 'consts';
 
 const LegendEmoji = ({ legend: { emojiCode, emoji } }) => (
-  <img className="legend__emoji" src={`./images/${emojiCode}-144.png`} alt={emoji} />
+  <img className="legend__emoji" src={`/images/${emojiCode}-144.png`} alt={emoji} />
 );
 
-const LegendModal = ({ legend: { emoji, coordinates, title, text }, legend, onClose }) => (
-  <div className="legend__modal" style={{ zIndex: zIndexes[zIndexElements.LEGENDS_MODAL] }}>
-    <div className="legend__content">
-      <Clickable className="legend__left" onClick={onClose}>
-        <Title />
-        <LegendEmoji legend={legend} />
-        <Wir />
-      </Clickable>
-      <div className="legend__right">
-        <div className="legend__top">
-          <div className="legend__emoji-wrapper">
-            <LegendEmoji legend={legend} />
+const LegendModal = ({ legendId, legendsById }) => {
+  const legend = legendsById[legendId];
+  const { emoji, coordinates, title, text } = legend;
+  useEffect(() => {
+    track({ action: 'emoji-clicked', label: `${emoji} ${title}` });
+    pageView();
+  }, []);
+  return (
+    <div className="legend__modal" style={{ zIndex: zIndexes[zIndexElements.LEGENDS_MODAL] }}>
+      <div className="legend__content">
+        <Link className="legend__left" to="/legends">
+          <Header />
+          <LegendEmoji legend={legend} />
+        </Link>
+        <Footer />
+        <div className="legend__right">
+          <div className="legend__top">
+            <div className="legend__emoji-wrapper">
+              <LegendEmoji legend={legend} />
+            </div>
+            <a
+              href={getGoogleMapsUrl(coordinates)}
+              rel="noopener noreferrer"
+              target="_blank"
+              onClick={() => track({ action: 'google-map-opened', label: `${emoji} ${title}` })}
+            >
+              {formatcoords(coordinates, true).format('DD MM X', {
+                latLonSeparator: ', ',
+                decimalPlaces: 2,
+              })}
+            </a>
+            <div className="legend__title">{title}</div>
           </div>
-          <a
-            href={getGoogleMapsUrl(coordinates)}
-            rel="noopener noreferrer"
-            target="_blank"
-            onClick={() => track({ action: 'google-map-opened', label: `${emoji} ${title}` })}
-          >
-            {formatcoords(coordinates, true).format('DD MM X', {
-              latLonSeparator: ', ',
-              decimalPlaces: 2,
-            })}
-          </a>
-          <div className="legend__title">{title}</div>
+          <div className="legend__text">
+            <TextWithSeparator
+              text={text}
+              symbol={`\n`}
+              separator={
+                <>
+                  <br />
+                  <br />
+                </>
+              }
+            />
+          </div>
         </div>
-        <div className="legend__text">
-          <TextWithSeparator
-            text={text}
-            symbol="\n"
-            separator={
-              <>
-                <br />
-                <br />
-              </>
-            }
-          />
-        </div>
+        <Link to="/legends" type="button" className="legend__close-button">
+          <CrossSvgIcon className="legend__close-icon" />
+        </Link>
+        <OnEscape action={() => navigate('/legends')} />
       </div>
-      <button
-        type="button"
-        className="legend__close-button"
-        onClick={onClose}
-        // eslint-disable-next-line jsx-a11y/no-autofocus
-        autoFocus="autofocus"
-      >
-        <CrossSvgIcon className="legend__close-icon" />
-      </button>
-      <OnEscape action={onClose} />
     </div>
-  </div>
-);
+  );
+};
 
 LegendModal.propTypes = {
-  legend: LegendShape.isRequired,
-  onClose: PropTypes.func.isRequired,
+  legendId: PropTypes.string,
+  legendsById: PropTypes.objectOf(LegendShape).isRequired,
+};
+
+LegendModal.defaultProps = {
+  legendId: null,
 };
 
 export default LegendModal;

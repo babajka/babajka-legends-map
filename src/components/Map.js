@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link, Match } from '@reach/router';
 import ReactMapboxGl, { Marker, ZoomControl } from 'react-mapbox-gl';
 
-import Clickable from 'lib/components/Clickable';
-import Title from 'components/Title';
-import Wir from 'components/Wir';
-import LegendModal from 'components/LegendModal';
-
-import { track, isDesktopDevice } from 'utils';
+import { isDesktopDevice } from 'utils';
 
 import {
   MAPBOX_ACCESS_TOKEN,
@@ -18,7 +14,7 @@ import {
   LegendShape,
   zIndexes,
   zIndexElements,
-} from '../constants';
+} from 'consts';
 
 const Mapbox = ReactMapboxGl({
   accessToken: MAPBOX_ACCESS_TOKEN,
@@ -44,14 +40,29 @@ const getFitBoundsOptions = ({ rightShift, topShift }) => ({
 class Map extends Component {
   static propTypes = {
     legends: PropTypes.arrayOf(LegendShape).isRequired,
+    children: PropTypes.node.isRequired,
+    match: PropTypes.shape({
+      legendId: PropTypes.string.isRequired,
+    }),
+  };
+
+  static defaultProps = {
+    match: null,
   };
 
   state = {
-    activeLegend: null,
+    zoom: null,
   };
 
   componentDidMount() {
     window.addEventListener('resize', this.resizeMap);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { match } = this.props;
+    if (prevProps.match !== match) {
+      this.resizeMap();
+    }
   }
 
   componentWillUnmount() {
@@ -67,85 +78,74 @@ class Map extends Component {
   };
 
   calculateShifts = () => {
-    const { activeLegend } = this.state;
+    const { match } = this.props;
     return {
-      rightShift: isDesktopDevice() && !activeLegend,
+      rightShift: isDesktopDevice() && !match,
       topShift: !isDesktopDevice(),
     };
   };
 
   resizeMap = () => {
-    this.map.resize();
-    this.map.fitBounds(BELARUS_BOUNDS, getFitBoundsOptions(this.calculateShifts()));
+    setTimeout(() => {
+      this.map.resize();
+      this.map.fitBounds(BELARUS_BOUNDS, getFitBoundsOptions(this.calculateShifts()));
+    }, 10);
   };
 
-  setActiveLegend = activeLegend => this.setState({ activeLegend }, this.resizeMap);
-
   render() {
-    const { legends } = this.props;
-    const { activeLegend, zoom } = this.state;
+    const { legends, children, match } = this.props;
+    const { zoom } = this.state;
     return (
       <>
-        <Title />
-        <main>
-          <Mapbox
-            style={LIGHT_STYLE}
-            containerStyle={{
-              position: 'absolute',
-              top: activeLegend ? 150 : 0,
-              bottom: 0,
-              width: activeLegend ? '50%' : '100%',
-              zIndex: zIndexes[zIndexElements.MAP],
-            }}
-            fitBounds={BELARUS_BOUNDS}
-            fitBoundsOptions={getFitBoundsOptions(this.calculateShifts())}
-            center={MINSK}
-            onZoom={this.handleZoom}
-            // HACK: same `map` object
-            onSourceDataLoading={map => {
-              if (!this.map) {
-                this.map = map;
-              }
-            }}
-          >
-            {!activeLegend && <ZoomControl style={{ zIndex: zIndexes[zIndexElements.CONTROLS] }} />}
-            {legends
-              .filter(({ id }) => !activeLegend || id === activeLegend.id)
-              .map(legend => {
-                const { id, title, coordinates, emoji, emojiCode } = legend;
-                return (
-                  <Marker
-                    key={id}
-                    coordinates={coordinates}
-                    style={{ zIndex: zIndexes[zIndexElements.MARKER] }}
-                  >
-                    <Clickable
-                      className="legends__marker"
-                      onClick={({ currentTarget }) => {
-                        // HACK: clear outline
-                        currentTarget.blur();
-                        track({ action: 'emoji-clicked', label: `${emoji} ${title}` });
-                        this.setActiveLegend(legend);
-                      }}
-                    >
-                      <img
-                        alt={emoji}
-                        src={`./images/${emojiCode}-72.png`}
-                        width={zoom * EMOJI_SCALE_RATE}
-                      />
-                    </Clickable>
-                  </Marker>
-                );
-              })}
-          </Mapbox>
-        </main>
-        <Wir />
-        {activeLegend && (
-          <LegendModal legend={activeLegend} onClose={() => this.setActiveLegend(null)} />
-        )}
+        <Mapbox
+          style={LIGHT_STYLE}
+          containerStyle={{
+            position: 'absolute',
+            top: match ? 150 : 0,
+            bottom: 0,
+            width: match ? '50%' : '100%',
+            zIndex: zIndexes[zIndexElements.MAP],
+          }}
+          fitBounds={BELARUS_BOUNDS}
+          fitBoundsOptions={getFitBoundsOptions(this.calculateShifts())}
+          center={MINSK}
+          onZoom={this.handleZoom}
+          // HACK: save `map` object
+          onSourceDataLoading={map => {
+            if (!this.map) {
+              this.map = map;
+            }
+          }}
+          movingMethod="easeTo"
+        >
+          {!match && <ZoomControl style={{ zIndex: zIndexes[zIndexElements.CONTROLS] }} />}
+          {legends
+            .filter(({ id }) => !match || id === match.legendId)
+            .map(legend => {
+              const { id, coordinates, emoji, emojiCode } = legend;
+              return (
+                <Marker
+                  key={id}
+                  coordinates={coordinates}
+                  style={{ zIndex: zIndexes[zIndexElements.MARKER] }}
+                >
+                  <Link className="legends__marker" to={`/legends/${id}`}>
+                    <img
+                      alt={emoji}
+                      src={`/images/${emojiCode}-72.png`}
+                      width={zoom * EMOJI_SCALE_RATE}
+                    />
+                  </Link>
+                </Marker>
+              );
+            })}
+        </Mapbox>
+        {children}
       </>
     );
   }
 }
 
-export default Map;
+export default props => (
+  <Match path="/legends/:legendId">{({ match }) => <Map {...props} match={match} />}</Match>
+);
