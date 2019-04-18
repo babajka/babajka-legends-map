@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { zIndexes, zIndexElements } from '../constants';
+import { zIndexes, zIndexElements } from 'consts';
 
-const Title = () => (
+const Header = () => (
   <div className="title" style={{ zIndex: zIndexes[zIndexElements.LABELS] }}>
     Мапа
     <br />
@@ -12,4 +12,4 @@ const Title = () => (
   </div>
 );
 
-export default Title;
+export default Header;

@@ -3,9 +3,9 @@ import React from 'react';
 import StopClickPropagation from 'lib/components/StopClickPropagation';
 import Logo from 'assets/logo/Logo';
 
-import { zIndexes, zIndexElements } from '../constants';
+import { zIndexes, zIndexElements } from 'consts';
 
-const Wir = () => (
+const Footer = () => (
   <div className="wir" style={{ zIndex: zIndexes[zIndexElements.LABELS] }}>
     <Logo size={32} className="wir__logo" />
     <StopClickPropagation>
@@ -22,4 +22,4 @@ const Wir = () => (
   </div>
 );
 
-export default Wir;
+export default Footer;

@@ -15,7 +15,7 @@ doc.getInfo((err, info) => {
   new Promise(resolve => {
     legendsSheet.getRows({}, (error, rows) => {
       resolve(
-        rows.map(({ title, lat, lng, text, emoji, emojicode }, id) => ({
+        rows.map(({ id, title, lat, lng, text, emoji, emojicode }) => ({
           id,
           title,
           coordinates: [+lng, +lat],

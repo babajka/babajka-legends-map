@@ -4,7 +4,8 @@ import ReactGA from 'react-ga';
 
 import clearUtmParams from 'lib/utils/clearUtmParams';
 
-import { GA_ID } from '../constants';
+import { pageView } from 'utils';
+import { GA_ID } from 'consts';
 
 class GA extends Component {
   static propTypes = {
@@ -16,9 +17,7 @@ class GA extends Component {
       ReactGA.initialize(GA_ID[process.env.REACT_APP_WIR_ENV], {
         debug: process.env.REACT_APP_WIR_ENV !== 'production',
       });
-      ReactGA.ga('send', 'pageview', window.location.pathname, {
-        hitCallback: clearUtmParams,
-      });
+      pageView({ hitCallback: clearUtmParams });
     }
   }
 
