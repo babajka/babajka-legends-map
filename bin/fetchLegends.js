@@ -26,6 +26,6 @@ doc.getInfo((err, info) => {
       );
     });
   }).then(legends => {
-    writeFileSync('src/legends.json', JSON.stringify(legends));
+    writeFileSync('src/data/legends.json', JSON.stringify(legends));
   });
 });

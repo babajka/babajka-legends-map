@@ -7,7 +7,8 @@ import Map from 'components/Map';
 import LegendModal from 'components/LegendModal';
 
 import 'styles.scss';
-import legends from 'legends.json';
+import legends from 'data/legends.json';
+import emojis from 'data/emojis.json';
 
 const legendsById = legends.reduce((acc, cur) => {
   acc[cur.id] = cur;
@@ -17,8 +18,8 @@ const legendsById = legends.reduce((acc, cur) => {
 const App = () => (
   <Root>
     <Router>
-      <Map path="legends" legends={legends}>
-        <LegendModal path=":legendId" legendsById={legendsById} />
+      <Map path="legends" legends={legends} emojis={emojis}>
+        <LegendModal path=":legendId" legendsById={legendsById} emojis={emojis} />
       </Map>
       <Redirect noThrow from="*" to="legends" />
     </Router>

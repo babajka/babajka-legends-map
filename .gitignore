@@ -1,4 +1,8 @@
 node_modules/
 build/
-src/legends.json
+temp/
+
+src/data/legends.json
+
 *.DS_Store
+*secret.json
