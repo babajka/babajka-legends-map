@@ -8,23 +8,24 @@ const fs = require('fs');
 const request = require('request');
 const rp = require('request-promise');
 const $ = require('cheerio');
-const legends = require('../src/legends.json');
+const legends = require('../src/data/legends.json');
 
 const emojisUrl = 'https://emojipedia.org/apple';
 const codes = legends.map(({ emojiCode }) => emojiCode).filter(Boolean);
+const nameByCode = legends.reduce((acc, { emojiCode, id }) => {
+  acc[emojiCode] = id;
+  return acc;
+}, {});
 const EMOJI_CODE_REGEXP = /_(?!emoji-modifier)(\S+)\.png/;
 
-const saveImage = (url, code, size) =>
+const saveImage = ({ url, code }) =>
   new Promise(resolve =>
     request.head(url, () =>
       request(url)
-        .pipe(fs.createWriteStream(`public/images/${code}-${size}.png`))
+        .pipe(fs.createWriteStream(`temp/${nameByCode[code]}.png`))
         .on('close', resolve)
     )
   );
-
-const saveImages = ({ smallUrl, largeUrl, code }) =>
-  Promise.all([saveImage(smallUrl, code, '72'), saveImage(largeUrl, code, '144')]);
 
 rp(emojisUrl)
   .then(html => {
@@ -37,12 +38,11 @@ rp(emojisUrl)
       })
       .map(({ attribs }) => {
         // cut trailing '_2x' string
-        const smallUrl = attribs['data-src'];
-        const largeUrl = attribs['data-srcset'].slice(0, -3);
+        const url = attribs['data-srcset'].slice(0, -3);
         const [_, code] = attribs['data-srcset'].match(EMOJI_CODE_REGEXP);
-        return { smallUrl, largeUrl, code };
+        return { url, code };
       });
-    return Promise.all(data.map(saveImages));
+    return Promise.all(data.map(saveImage));
   })
   // eslint-disable-next-line no-console
   .then(res => console.log(`> successfully scraped ${res.length}/${codes.length} images`))

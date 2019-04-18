@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, Match } from '@reach/router';
 import ReactMapboxGl, { Marker, ZoomControl } from 'react-mapbox-gl';
 
-import { isDesktopDevice } from 'utils';
+import { isDesktopDevice, getImageUrl } from 'utils';
 
 import {
   MAPBOX_ACCESS_TOKEN,
@@ -40,6 +40,7 @@ const getFitBoundsOptions = ({ rightShift, topShift }) => ({
 class Map extends Component {
   static propTypes = {
     legends: PropTypes.arrayOf(LegendShape).isRequired,
+    emojis: PropTypes.objectOf(PropTypes.string).isRequired,
     children: PropTypes.node.isRequired,
     match: PropTypes.shape({
       legendId: PropTypes.string.isRequired,
@@ -93,7 +94,7 @@ class Map extends Component {
   };
 
   render() {
-    const { legends, children, match } = this.props;
+    const { legends, emojis, children, match } = this.props;
     const { zoom } = this.state;
     return (
       <>
@@ -122,7 +123,7 @@ class Map extends Component {
           {legends
             .filter(({ id }) => !match || id === match.legendId)
             .map(legend => {
-              const { id, coordinates, emoji, emojiCode } = legend;
+              const { id, coordinates, emoji } = legend;
               return (
                 <Marker
                   key={id}
@@ -132,7 +133,7 @@ class Map extends Component {
                   <Link className="legends__marker" to={`/legends/${id}`}>
                     <img
                       alt={emoji}
-                      src={`/images/${emojiCode}-72.png`}
+                      src={getImageUrl(emojis[id])}
                       width={zoom * EMOJI_SCALE_RATE}
                     />
                   </Link>

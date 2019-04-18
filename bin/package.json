@@ -11,6 +11,7 @@
     "request-promise": "^4.2.2"
   },
   "dependencies": {
+    "cloudinary": "^1.14.0",
     "google-spreadsheet": "^2.0.6",
     "lodash": "^4.17.11",
     "twemoji": "^11.2.0"

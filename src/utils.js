@@ -18,3 +18,6 @@ export const track = options => {
 };
 
 export const isDesktopDevice = () => window.innerHeight < window.innerWidth;
+
+export const getImageUrl = id =>
+  `http://res.cloudinary.com/wir-by/image/upload/q_auto,f_auto/${id}`;

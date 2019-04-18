@@ -10,6 +10,7 @@
   "scripts": {
     "fetch-legends": "node bin/fetchLegends.js",
     "scrap-emojis": "node bin/emojipediaScrapper.js",
+    "upload-to-cl": "node bin/cloudinaryUpload.js",
     "postinstall": "npm i --prefix bin --production && npm run fetch-legends",
     "start": "react-scripts start",
     "lint": "npm run eslint .",

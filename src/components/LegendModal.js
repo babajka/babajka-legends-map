@@ -10,14 +10,14 @@ import Header from 'components/layout/Header';
 import Footer from 'components/layout/Footer';
 import CrossSvgIcon from 'components/CrossSvgIcon';
 
-import { getGoogleMapsUrl, track, pageView } from 'utils';
+import { getGoogleMapsUrl, track, pageView, getImageUrl } from 'utils';
 import { LegendShape, zIndexes, zIndexElements } from 'consts';
 
-const LegendEmoji = ({ legend: { emojiCode, emoji } }) => (
-  <img className="legend__emoji" src={`/images/${emojiCode}-144.png`} alt={emoji} />
+const LegendEmoji = ({ legend: { id, emoji }, emojis }) => (
+  <img className="legend__emoji" src={getImageUrl(emojis[id])} alt={emoji} />
 );
 
-const LegendModal = ({ legendId, legendsById }) => {
+const LegendModal = ({ legendId, legendsById, emojis }) => {
   const legend = legendsById[legendId];
   const { emoji, coordinates, title, text } = legend;
   useEffect(() => {
@@ -29,13 +29,13 @@ const LegendModal = ({ legendId, legendsById }) => {
       <div className="legend__content">
         <Link className="legend__left" to="/legends">
           <Header />
-          <LegendEmoji legend={legend} />
+          <LegendEmoji legend={legend} emojis={emojis} />
         </Link>
         <Footer />
         <div className="legend__right">
           <div className="legend__top">
             <div className="legend__emoji-wrapper">
-              <LegendEmoji legend={legend} />
+              <LegendEmoji legend={legend} emojis={emojis} />
             </div>
             <a
               href={getGoogleMapsUrl(coordinates)}
@@ -75,6 +75,7 @@ const LegendModal = ({ legendId, legendsById }) => {
 LegendModal.propTypes = {
   legendId: PropTypes.string,
   legendsById: PropTypes.objectOf(LegendShape).isRequired,
+  emojis: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 LegendModal.defaultProps = {
