@@ -133,7 +133,7 @@ class Map extends Component {
                   <Link className="legends__marker" to={`/legends/${id}`}>
                     <img
                       alt={emoji}
-                      src={getImageUrl(emojis[id])}
+                      src={getImageUrl(emojis[id], 64)}
                       width={zoom * EMOJI_SCALE_RATE}
                     />
                   </Link>

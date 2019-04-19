@@ -63,7 +63,7 @@ const LegendModal = ({ legendId, legendsById, emojis }) => {
             />
           </div>
         </div>
-        <Link to="/legends" type="button" className="legend__close-button">
+        <Link to="/legends" type="button" className="legend__close-button" aria-label="close">
           <CrossSvgIcon className="legend__close-icon" />
         </Link>
         <OnEscape action={() => navigate('/legends')} />

@@ -2,7 +2,6 @@
   "name": "babajka-legends-map",
   "version": "0.0.1",
   "description": "Wir.by Map of Legends",
-  "homepage": ".",
   "main": "src/index.js",
   "moduleRoots": [
     "./src"
@@ -22,7 +21,7 @@
     "eslint": "eslint --ignore-path .gitignore --fix",
     "prettier": "prettier --write",
     "prettier-stylelint": "prettier-stylelint --write",
-    "update-assets": "git submodule update --init && cp src/assets/logo/favicon.png public/"
+    "update-assets": "bash bin/update-assets.sh"
   },
   "repository": {
     "type": "git",

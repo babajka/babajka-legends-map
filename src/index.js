@@ -10,6 +10,8 @@ import 'styles.scss';
 import legends from 'data/legends.json';
 import emojis from 'data/emojis.json';
 
+import * as serviceWorker from './serviceWorker';
+
 const legendsById = legends.reduce((acc, cur) => {
   acc[cur.id] = cur;
   return acc;
@@ -28,3 +30,6 @@ const App = () => (
 
 const rootElement = document.getElementById('root');
 ReactDOM.render(<App />, rootElement);
+
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.register();
