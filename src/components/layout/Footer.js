@@ -5,6 +5,8 @@ import Logo from 'assets/logo/Logo';
 
 import { zIndexes, zIndexElements } from 'consts';
 
+import './footer.scss';
+
 const Footer = () => (
   <div className="wir" style={{ zIndex: zIndexes[zIndexElements.LABELS] }}>
     <Logo size={32} className="wir__logo" />

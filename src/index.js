@@ -6,9 +6,9 @@ import Root from 'components/layout/Root';
 import Map from 'components/Map';
 import LegendModal from 'components/LegendModal';
 
-import 'styles.scss';
 import legends from 'data/legends.json';
 import emojis from 'data/emojis.json';
+import 'styles.scss';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -18,14 +18,14 @@ const legendsById = legends.reduce((acc, cur) => {
 }, {});
 
 const App = () => (
-  <Root>
-    <Router>
+  <Router>
+    <Root default>
       <Map path="legends" legends={legends} emojis={emojis}>
         <LegendModal path=":legendId" legendsById={legendsById} emojis={emojis} />
       </Map>
       <Redirect noThrow from="*" to="legends" />
-    </Router>
-  </Root>
+    </Root>
+  </Router>
 );
 
 const rootElement = document.getElementById('root');

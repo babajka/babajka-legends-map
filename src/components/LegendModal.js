@@ -6,12 +6,12 @@ import { Link, navigate } from '@reach/router';
 import TextWithSeparator from 'lib/components/TextWithSeparator';
 import OnEscape from 'lib/components/OnEscape';
 
-import Header from 'components/layout/Header';
-import Footer from 'components/layout/Footer';
 import CrossSvgIcon from 'components/CrossSvgIcon';
 
 import { getGoogleMapsUrl, track, pageView, getImageUrl } from 'utils';
 import { LegendShape, zIndexes, zIndexElements } from 'consts';
+
+import './legend.scss';
 
 const LegendEmoji = ({ legend: { id, emoji }, emojis }) => (
   <img className="legend__emoji" src={getImageUrl(emojis[id])} alt={emoji} />
@@ -28,10 +28,8 @@ const LegendModal = ({ legendId, legendsById, emojis }) => {
     <div className="legend__modal" style={{ zIndex: zIndexes[zIndexElements.LEGENDS_MODAL] }}>
       <div className="legend__content">
         <Link className="legend__left" to="/legends">
-          <Header />
           <LegendEmoji legend={legend} emojis={emojis} />
         </Link>
-        <Footer />
         <div className="legend__right">
           <div className="legend__top">
             <div className="legend__emoji-wrapper">

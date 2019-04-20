@@ -1,0 +1,90 @@
+@import '../variables';
+
+.legend {
+    &__modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+
+        @media (min-width: $desktop) {
+            background: $semiTransparent;
+        }
+    }
+
+    &__content {
+        display: flex;
+        height: 100%;
+        flex-direction: row;
+    }
+
+    &__left {
+        display: none;
+
+        @media (min-width: $desktop) {
+            display: flex;
+            width: 50%;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+    }
+
+    &__right {
+        display: flex;
+        flex-direction: column;
+
+        @media (min-width: $desktop) {
+            width: 50%;
+            padding: 1rem;
+        }
+    }
+
+    &__top {
+        flex: 0 1 auto;
+        padding: 1rem;
+    }
+
+    &__emoji-wrapper {
+        @media (min-width: $desktop) {
+            display: none;
+        }
+    }
+
+    &__emoji {
+        width: 5rem;
+        height: 5rem;
+        margin-bottom: 1rem;
+
+        @media (min-width: $desktop) {
+            width: 7rem;
+            height: 7rem;
+        }
+    }
+
+    &__title {
+        font-size: 2rem;
+    }
+
+    &__text {
+        flex: 1 1 auto;
+        padding: 1rem;
+        overflow-y: auto;
+    }
+
+    &__close-button {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        border: unset;
+        background: unset;
+    }
+
+    &__close-icon {
+        color: $primary;
+        cursor: pointer;
+        font-size: 2rem;
+    }
+}

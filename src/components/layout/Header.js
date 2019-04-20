@@ -2,8 +2,10 @@ import React from 'react';
 
 import { zIndexes, zIndexElements } from 'consts';
 
+import './header.scss';
+
 const Header = () => (
-  <div className="title" style={{ zIndex: zIndexes[zIndexElements.LABELS] }}>
+  <div className="header" style={{ zIndex: zIndexes[zIndexElements.LABELS] }}>
     Мапа
     <br />
     беларускіх

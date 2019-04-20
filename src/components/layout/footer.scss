@@ -1,0 +1,25 @@
+@import '../../variables';
+
+.wir {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    max-width: 65%;
+    align-items: center;
+    padding: 1rem;
+    font-size: 0.95rem;
+
+    @media (min-width: $desktop) {
+        padding: 1rem;
+        font-size: 1.4rem;
+    }
+
+    &__logo {
+        margin-right: 0.5rem;
+    }
+
+    &__link {
+        margin-left: 4px;
+    }
+}
