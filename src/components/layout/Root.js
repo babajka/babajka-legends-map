@@ -1,17 +1,24 @@
 import React from 'react';
+import { Match } from '@reach/router';
 
 import Header from 'components/layout/Header';
 import Footer from 'components/layout/Footer';
 import GA from 'components/GA';
 
-const Root = ({ children }) => {
+import { isDesktopDevice } from 'utils';
+
+const Root = ({ children, onlyMain }) => {
   return (
     <GA>
-      <Header />
+      {!onlyMain && <Header />}
       <main>{children}</main>
-      <Footer />
+      {!onlyMain && <Footer />}
     </GA>
   );
 };
 
-export default Root;
+export default props => (
+  <Match path="/legends/:legendId">
+    {({ match }) => <Root {...props} onlyMain={match && !isDesktopDevice()} />}
+  </Match>
+);

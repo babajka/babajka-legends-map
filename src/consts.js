@@ -45,8 +45,8 @@ export const zIndexes = [
   zIndexElements.MAP,
   zIndexElements.MARKER,
   zIndexElements.CONTROLS,
-  zIndexElements.LABELS,
   zIndexElements.LEGENDS_MODAL,
+  zIndexElements.LABELS,
 ].reduce((acc, cur, index) => {
   acc[cur] = index;
   return acc;

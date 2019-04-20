@@ -1,0 +1,15 @@
+@import '../../variables';
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 1rem;
+    font-size: 3rem;
+    font-weight: bold;
+
+    @media (min-width: $desktop) {
+        padding: 2rem;
+        font-size: 3.5rem;
+    }
+}
