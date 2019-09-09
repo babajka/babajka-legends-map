@@ -43,7 +43,7 @@
     "react-dom": "^16.8.6",
     "react-ga": "^2.5.6",
     "react-mapbox-gl": "^4.0.2",
-    "react-scripts": "2.1.8"
+    "react-scripts": "3.1.1"
   },
   "devDependencies": {
     "eslint-config-airbnb": "^17.1.0",

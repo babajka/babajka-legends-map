@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import formatcoords from 'formatcoords';
-import { Link, navigate } from '@reach/router';
+import { Link, Redirect, navigate } from '@reach/router';
 
 import TextWithSeparator from 'lib/components/TextWithSeparator';
 import OnEscape from 'lib/components/OnEscape';
@@ -19,11 +19,16 @@ const LegendEmoji = ({ legend: { id, emoji }, emojis }) => (
 
 const LegendModal = ({ legendId, legendsById, emojis }) => {
   const legend = legendsById[legendId];
-  const { emoji, coordinates, title, text } = legend;
+  const { emoji, coordinates, title, text } = legend || {};
   useEffect(() => {
-    track({ action: 'emoji-clicked', label: `${emoji} ${title}` });
-    pageView();
-  }, []);
+    if (title) {
+      track({ action: 'emoji-clicked', label: `${emoji} ${title}` });
+      pageView();
+    }
+  }, [emoji, title]);
+  if (!title) {
+    return <Redirect to="/" noThrow />;
+  }
   return (
     <div className="legend__modal" style={{ zIndex: zIndexes[zIndexElements.LEGENDS_MODAL] }}>
       <div className="legend__content">
