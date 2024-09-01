@@ -1,9 +1,5 @@
 import PropTypes from 'prop-types';
-
 import createConstants from 'lib/utils/createConstants';
-
-export const MAPBOX_ACCESS_TOKEN =
-  'pk.eyJ1IjoidWxhZGJvaGRhbiIsImEiOiJjam9kMDQ1NzYxOTYyM3FvanhpOXE1cDIzIn0.JiXb8lR9e53GqZz51PZdaQ';
 
 export const GA_ID = {
   staging: 'UA-117143376-4',

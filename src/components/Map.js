@@ -6,7 +6,6 @@ import ReactMapboxGl, { Marker, ZoomControl } from 'react-mapbox-gl';
 import { isDesktopDevice, getImageUrl } from 'utils';
 
 import {
-  MAPBOX_ACCESS_TOKEN,
   LIGHT_STYLE,
   MINSK,
   BELARUS_BOUNDS,
@@ -17,7 +16,7 @@ import {
 } from 'consts';
 
 const Mapbox = ReactMapboxGl({
-  accessToken: MAPBOX_ACCESS_TOKEN,
+  accessToken: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN,
   logoPosition: 'bottom-right',
   minZoom: 4,
   maxZoom: 6.5,
@@ -95,6 +94,7 @@ class Map extends Component {
 
   render() {
     const { legends, emojis, children, match } = this.props;
+
     const { zoom } = this.state;
     return (
       <>
@@ -124,6 +124,7 @@ class Map extends Component {
             .filter(({ id }) => !match || id === match.legendId)
             .map(legend => {
               const { id, coordinates, emoji } = legend;
+
               return (
                 <Marker
                   key={id}
