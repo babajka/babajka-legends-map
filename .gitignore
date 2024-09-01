@@ -6,3 +6,5 @@ src/data/legends.json
 
 *.DS_Store
 *secret.json
+
+.env
