@@ -1,6 +1,7 @@
 const fs = require('fs');
 const cloudinary = require('cloudinary').v2;
 
+// eslint-disable-next-line import/no-unresolved
 const config = require('./secret.json');
 const urlsMap = require('../src/data/emojis.json');
 

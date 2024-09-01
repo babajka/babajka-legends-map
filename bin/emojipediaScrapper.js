@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 
 /*
-  eslint-disable import/no-extraneous-dependencies
+  eslint-disable import/no-unresolved
  */
-
 const fs = require('fs');
 const request = require('request');
 const rp = require('request-promise');

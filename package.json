@@ -18,6 +18,7 @@
     "start": "react-scripts start",
     "lint": "npm run eslint .",
     "build": "react-scripts build",
+    "serve": "npx serve -s build",
     "analyze": "npm run build -- --stats && webpack-bundle-analyzer build/bundle-stats.json",
     "predeploy": "REACT_APP_WIR_ENV=staging npm run build",
     "deploy": "gh-pages -d build",
