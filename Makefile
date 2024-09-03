@@ -1,4 +1,4 @@
 .PHONY: install
 install:
-	npm install
+	npm install --force
 	cd bin && npm install
