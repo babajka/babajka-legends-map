@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -10,13 +12,11 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://cra.link/PWA
 
-/* eslint-disable no-console */
-
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
     // [::1] is the IPv6 localhost address.
     window.location.hostname === '[::1]' ||
-    // 127.0.0.1/8 is considered localhost for IPv4.
+    // 127.0.0.0/8 are considered localhost for IPv4.
     window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
 );
 
@@ -43,8 +43,8 @@ export function register(config) {
         // service worker/PWA documentation.
         navigator.serviceWorker.ready.then(() => {
           console.log(
-            'This web app is being served cache-first by a service worker. ' +
-              'To learn more, visit https://cra.link/PWA'
+            'This web app is being served cache-first by a service ' +
+              'worker. To learn more, visit https://cra.link/PWA'
           );
         });
       } else {
@@ -77,25 +77,17 @@ function registerValidSW(swUrl, config) {
                   'tabs for this page are closed. See https://cra.link/PWA.'
               );
 
-              // Notify the user that a new version is available
+              // Execute callback
               if (config && config.onUpdate) {
                 config.onUpdate(registration);
               }
-
-              // Optional: Force the waiting service worker to become active
-              if (registration.waiting) {
-                registration.waiting.postMessage({ type: 'SKIP_WAITING' });
-              }
-
-              // Reload the page to load the new content
-              window.location.reload();
             } else {
               // At this point, everything has been precached.
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
               console.log('Content is cached for offline use.');
 
-              // Notify the user that the app is cached
+              // Execute callback
               if (config && config.onSuccess) {
                 config.onSuccess(registration);
               }
@@ -148,27 +140,3 @@ export function unregister() {
       });
   }
 }
-
-// eslint-disable-next-line no-restricted-globals
-self.addEventListener('message', event => {
-  console.log('Service Worker: received message: ', event.data);
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    // eslint-disable-next-line no-restricted-globals
-    self.skipWaiting();
-  }
-});
-
-// eslint-disable-next-line no-restricted-globals
-self.addEventListener('install', () => {
-  console.log('Service Worker: Installed');
-});
-
-// eslint-disable-next-line no-restricted-globals
-self.addEventListener('activate', () => {
-  console.log('Service Worker: Activated');
-});
-
-// eslint-disable-next-line no-restricted-globals
-self.addEventListener('fetch', event => {
-  console.log('Service Worker: Fetching', event.request.url);
-});
