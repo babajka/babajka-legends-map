@@ -151,8 +151,24 @@ export function unregister() {
 
 // eslint-disable-next-line no-restricted-globals
 self.addEventListener('message', event => {
+  console.log('Service Worker: received message: ', event.data);
   if (event.data && event.data.type === 'SKIP_WAITING') {
     // eslint-disable-next-line no-restricted-globals
     self.skipWaiting();
   }
+});
+
+// eslint-disable-next-line no-restricted-globals
+self.addEventListener('install', () => {
+  console.log('Service Worker: Installed');
+});
+
+// eslint-disable-next-line no-restricted-globals
+self.addEventListener('activate', () => {
+  console.log('Service Worker: Activated');
+});
+
+// eslint-disable-next-line no-restricted-globals
+self.addEventListener('fetch', event => {
+  console.log('Service Worker: Fetching', event.request.url);
 });
