@@ -8,7 +8,7 @@
 // resources are updated in the background.
 
 // To learn more about the benefits of this model and instructions on how to
-// opt-in, read https://bit.ly/CRA-PWA
+// opt-in, read https://cra.link/PWA
 
 /* eslint-disable no-console */
 
@@ -43,8 +43,8 @@ export function register(config) {
         // service worker/PWA documentation.
         navigator.serviceWorker.ready.then(() => {
           console.log(
-            'This web app is being served cache-first by a service ' +
-              'worker. To learn more, visit https://bit.ly/CRA-PWA'
+            'This web app is being served cache-first by a service worker. ' +
+              'To learn more, visit https://cra.link/PWA'
           );
         });
       } else {
@@ -74,20 +74,28 @@ function registerValidSW(swUrl, config) {
               // content until all client tabs are closed.
               console.log(
                 'New content is available and will be used when all ' +
-                  'tabs for this page are closed. See https://bit.ly/CRA-PWA.'
+                  'tabs for this page are closed. See https://cra.link/PWA.'
               );
 
-              // Execute callback
+              // Notify the user that a new version is available
               if (config && config.onUpdate) {
                 config.onUpdate(registration);
               }
+
+              // Optional: Force the waiting service worker to become active
+              if (registration.waiting) {
+                registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+              }
+
+              // Reload the page to load the new content
+              window.location.reload();
             } else {
               // At this point, everything has been precached.
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
               console.log('Content is cached for offline use.');
 
-              // Execute callback
+              // Notify the user that the app is cached
               if (config && config.onSuccess) {
                 config.onSuccess(registration);
               }
@@ -103,7 +111,9 @@ function registerValidSW(swUrl, config) {
 
 function checkValidServiceWorker(swUrl, config) {
   // Check if the service worker can be found. If it can't reload the page.
-  fetch(swUrl)
+  fetch(swUrl, {
+    headers: { 'Service-Worker': 'script' },
+  })
     .then(response => {
       // Ensure service worker exists, and that we really are getting a JS file.
       const contentType = response.headers.get('content-type');
@@ -129,8 +139,20 @@ function checkValidServiceWorker(swUrl, config) {
 
 export function unregister() {
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready.then(registration => {
-      registration.unregister();
-    });
+    navigator.serviceWorker.ready
+      .then(registration => {
+        registration.unregister();
+      })
+      .catch(error => {
+        console.error(error.message);
+      });
   }
 }
+
+// eslint-disable-next-line no-restricted-globals
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    // eslint-disable-next-line no-restricted-globals
+    self.skipWaiting();
+  }
+});
